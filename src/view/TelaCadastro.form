@@ -64,78 +64,78 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" min="-2" pref="447" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="bSlavar" min="-2" pref="115" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="bLimpar" min="-2" pref="115" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="labelDia" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="labelAnoVeiculo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelCadastrar" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelDadosVeiculo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelDadosOficina" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="labelDasdosCliente" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="labelNomeCliente" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="campoNomeCliente" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                                          <Component id="labelTipoVeiculo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cbTipoVeiculo" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="campoCpf" min="-2" pref="144" max="-2" attributes="0"/>
-                                                  <Component id="labelCpf" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="labelNumeroCelular" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="campoNumeroCelular" min="-2" pref="155" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="labelModeloVeiculo" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="campoModeloVeiculo" min="-2" pref="106" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="labelPlaca" min="-2" pref="37" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                                                      <Component id="labelCor" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="campoPlaca" min="-2" pref="95" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="campoCor" min="-2" pref="86" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Component id="labelDiagnostico" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="campoAnoVeiculo" min="-2" pref="136" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="529" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="campoDia" min="-2" pref="160" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="campoMotivo" min="-2" pref="307" max="-2" attributes="0"/>
+                                      <Component id="campoMotivo" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="campoAnoVeiculo" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane2" alignment="0" min="-2" pref="447" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="bSlavar" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="bLimpar" min="-2" pref="115" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="labelDia" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="labelAnoVeiculo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelCadastrar" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelDadosVeiculo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelDadosOficina" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="labelDasdosCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelNomeCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="campoNomeCliente" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                              <Component id="labelTipoVeiculo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="cbTipoVeiculo" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="campoCpf" min="-2" pref="144" max="-2" attributes="0"/>
+                                                      <Component id="labelCpf" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="labelNumeroCelular" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="campoNumeroCelular" min="-2" pref="155" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="labelModeloVeiculo" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="campoModeloVeiculo" min="-2" pref="106" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="labelPlaca" min="-2" pref="37" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                                          <Component id="labelCor" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="campoPlaca" min="-2" pref="95" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="campoCor" min="-2" pref="86" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <Component id="labelDiagnostico" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="186" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -202,7 +202,7 @@
                           <Component id="bSlavar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="bLimpar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="406" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="403" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -214,7 +214,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[146, 34]"/>
+                  <Dimension value="[146, 37]"/>
                 </Property>
               </Properties>
 
@@ -225,6 +225,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="labelSistema" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="bVoltarMenu" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -232,7 +234,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="labelSistema" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelSistema" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="bVoltarMenu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace pref="8" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -252,6 +257,14 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Sistema de Oficina"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="bVoltarMenu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Voltar ao Menu"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVoltarMenuActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

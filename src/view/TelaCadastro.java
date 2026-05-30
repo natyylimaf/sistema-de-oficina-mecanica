@@ -1,9 +1,5 @@
 package view;
 
-/**
- *
- * @author nathália lima
- */
 public class TelaCadastro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastro.class.getName());
@@ -32,6 +28,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         panelCadastro = new javax.swing.JPanel();
         panelTopo = new javax.swing.JPanel();
         labelSistema = new javax.swing.JLabel();
+        bVoltarMenu = new javax.swing.JButton();
         labelCadastrar = new javax.swing.JLabel();
         labelDasdosCliente = new javax.swing.JLabel();
         labelNomeCliente = new javax.swing.JLabel();
@@ -71,12 +68,15 @@ public class TelaCadastro extends javax.swing.JFrame {
         panelCadastro.setPreferredSize(new java.awt.Dimension(500, 1000));
 
         panelTopo.setBackground(new java.awt.Color(0, 0, 0));
-        panelTopo.setPreferredSize(new java.awt.Dimension(146, 34));
+        panelTopo.setPreferredSize(new java.awt.Dimension(146, 37));
 
         labelSistema.setBackground(new java.awt.Color(0, 0, 0));
         labelSistema.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelSistema.setForeground(new java.awt.Color(255, 255, 255));
         labelSistema.setText("Sistema de Oficina");
+
+        bVoltarMenu.setText("Voltar ao Menu");
+        bVoltarMenu.addActionListener(this::bVoltarMenuActionPerformed);
 
         javax.swing.GroupLayout panelTopoLayout = new javax.swing.GroupLayout(panelTopo);
         panelTopo.setLayout(panelTopoLayout);
@@ -85,13 +85,17 @@ public class TelaCadastro extends javax.swing.JFrame {
             .addGroup(panelTopoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelSistema)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bVoltarMenu)
+                .addGap(42, 42, 42))
         );
         panelTopoLayout.setVerticalGroup(
             panelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTopoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelSistema)
+                .addGroup(panelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelSistema)
+                    .addComponent(bVoltarMenu))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -156,61 +160,61 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCadastroLayout.createSequentialGroup()
-                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelCadastroLayout.createSequentialGroup()
-                                .addComponent(bSlavar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelCadastroLayout.createSequentialGroup()
-                                .addComponent(labelDia)
-                                .addGap(88, 88, 88)
-                                .addComponent(jLabel2))
-                            .addComponent(labelAnoVeiculo)
-                            .addComponent(labelCadastrar)
-                            .addComponent(labelDadosVeiculo)
-                            .addComponent(labelDadosOficina)
-                            .addGroup(panelCadastroLayout.createSequentialGroup()
-                                .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(labelDasdosCliente)
-                                    .addComponent(labelNomeCliente)
-                                    .addComponent(campoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelTipoVeiculo)
-                                    .addComponent(cbTipoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelCadastroLayout.createSequentialGroup()
-                                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(labelCpf))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelNumeroCelular)
-                                            .addComponent(campoNumeroCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(panelCadastroLayout.createSequentialGroup()
-                                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelModeloVeiculo)
-                                            .addComponent(campoModeloVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(panelCadastroLayout.createSequentialGroup()
-                                                .addComponent(labelPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(64, 64, 64)
-                                                .addComponent(labelCor))
-                                            .addGroup(panelCadastroLayout.createSequentialGroup()
-                                                .addComponent(campoPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                            .addComponent(labelDiagnostico))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(campoAnoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 529, Short.MAX_VALUE))
                     .addGroup(panelCadastroLayout.createSequentialGroup()
-                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(panelCadastroLayout.createSequentialGroup()
                                 .addComponent(campoDia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(campoMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(campoAnoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 186, Short.MAX_VALUE))))
+                                .addComponent(campoMotivo))
+                            .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(panelCadastroLayout.createSequentialGroup()
+                                    .addComponent(bSlavar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(bLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panelCadastroLayout.createSequentialGroup()
+                                    .addComponent(labelDia)
+                                    .addGap(88, 88, 88)
+                                    .addComponent(jLabel2))
+                                .addComponent(labelAnoVeiculo)
+                                .addComponent(labelCadastrar)
+                                .addComponent(labelDadosVeiculo)
+                                .addComponent(labelDadosOficina)
+                                .addGroup(panelCadastroLayout.createSequentialGroup()
+                                    .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(labelDasdosCliente)
+                                        .addComponent(labelNomeCliente)
+                                        .addComponent(campoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelTipoVeiculo)
+                                        .addComponent(cbTipoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(panelCadastroLayout.createSequentialGroup()
+                                            .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(labelCpf))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(labelNumeroCelular)
+                                                .addComponent(campoNumeroCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(panelCadastroLayout.createSequentialGroup()
+                                            .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(labelModeloVeiculo)
+                                                .addComponent(campoModeloVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(panelCadastroLayout.createSequentialGroup()
+                                                    .addComponent(labelPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(64, 64, 64)
+                                                    .addComponent(labelCor))
+                                                .addGroup(panelCadastroLayout.createSequentialGroup()
+                                                    .addComponent(campoPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(labelDiagnostico)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelCadastroLayout.setVerticalGroup(
             panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +270,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bSlavar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 406, Short.MAX_VALUE))
+                .addGap(0, 403, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(panelCadastro);
@@ -286,6 +290,11 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVoltarMenuActionPerformed
+        new TelaMenu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_bVoltarMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,6 +324,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bLimpar;
     private javax.swing.JButton bSlavar;
+    private javax.swing.JButton bVoltarMenu;
     private javax.swing.JTextField campoAnoVeiculo;
     private javax.swing.JTextField campoCor;
     private javax.swing.JTextField campoCpf;

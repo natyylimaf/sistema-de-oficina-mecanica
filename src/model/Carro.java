@@ -1,24 +1,15 @@
 package model;
 
-/**
- *
- * @author bryan
- */
 public class Carro extends Veiculo {
     private int numeroPortas;
 
-    public Carro(String placa, String modelo, int ano, int numeroPortas) {
-        super(placa, modelo, ano);
+    public Carro(String placa, String modelo, int ano, String cor, int numeroPortas) {
+        super(placa, modelo, ano, cor);
         this.numeroPortas = numeroPortas;
     }
 
-    public int getNumeroPortas() {
-        return numeroPortas;
-    }
-
-    public void setNumeroPortas(int numeroPortas) {
-        this.numeroPortas = numeroPortas;
-    }
+    public int getNumeroPortas() { return numeroPortas; }
+    public void setNumeroPortas(int numeroPortas) { this.numeroPortas = numeroPortas; }
 
     @Override
     public String problemaVeiculo() {
@@ -33,6 +24,8 @@ public class Carro extends Veiculo {
                 + getModelo()
                 + ", ano="
                 + getAno()
+                + ", cor="
+                + getCor()
                 + ", portas="
                 + numeroPortas
                 + "]";

@@ -4,10 +4,6 @@ import util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-/**
- *
- * @author nathália lima
- */
 public class VeiculoDAO {
 
     public boolean salvar(

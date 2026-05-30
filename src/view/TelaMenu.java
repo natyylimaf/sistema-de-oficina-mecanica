@@ -1,9 +1,5 @@
 package view;
 
-/**
- *
- * @author nathália lima
- */
 public class TelaMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenu.class.getName());
@@ -31,6 +27,7 @@ public class TelaMenu extends javax.swing.JFrame {
         panelMenu = new javax.swing.JPanel();
         panelTopo = new javax.swing.JPanel();
         labelSistema = new javax.swing.JLabel();
+        bSair = new javax.swing.JButton();
         labelMenu = new javax.swing.JLabel();
         bCadastrar = new javax.swing.JButton();
         bBuscar = new javax.swing.JButton();
@@ -54,6 +51,9 @@ public class TelaMenu extends javax.swing.JFrame {
         labelSistema.setForeground(new java.awt.Color(255, 255, 255));
         labelSistema.setText("Sistema de Oficina");
 
+        bSair.setText("Sair");
+        bSair.addActionListener(this::bSairActionPerformed);
+
         javax.swing.GroupLayout panelTopoLayout = new javax.swing.GroupLayout(panelTopo);
         panelTopo.setLayout(panelTopoLayout);
         panelTopoLayout.setHorizontalGroup(
@@ -61,13 +61,17 @@ public class TelaMenu extends javax.swing.JFrame {
             .addGroup(panelTopoLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(labelSistema)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bSair)
+                .addContainerGap())
         );
         panelTopoLayout.setVerticalGroup(
             panelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTopoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelSistema)
+                .addGroup(panelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelSistema)
+                    .addComponent(bSair))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -82,6 +86,7 @@ public class TelaMenu extends javax.swing.JFrame {
         bBuscar.setText("Buscar veículo");
         bBuscar.setBorder(null);
         bBuscar.setPreferredSize(new java.awt.Dimension(150, 50));
+        bBuscar.addActionListener(this::bBuscarActionPerformed);
 
         bEditar.setText("Editar cadastro");
         bEditar.setBorder(null);
@@ -140,7 +145,7 @@ public class TelaMenu extends javax.swing.JFrame {
                     .addComponent(bDesativar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 113, Short.MAX_VALUE))
+                .addGap(0, 110, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,6 +172,19 @@ public class TelaMenu extends javax.swing.JFrame {
         tela.setVisible(true);
         dispose(); // fecha o menu (opcional)
     }//GEN-LAST:event_bCadastrarActionPerformed
+
+    private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
+        TelaBuscar tela = new TelaBuscar();
+        tela.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_bBuscarActionPerformed
+
+    private void bSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSairActionPerformed
+        TelaLogin tela = new TelaLogin();
+        tela.setVisible(true);
+
+        dispose(); // fecha menu
+    }//GEN-LAST:event_bSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,6 +217,7 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JButton bDesativar;
     private javax.swing.JButton bEditar;
     private javax.swing.JButton bFiltrar;
+    private javax.swing.JButton bSair;
     private javax.swing.JButton bStatus;
     private javax.swing.JLabel labelMenu;
     private javax.swing.JLabel labelSistema;

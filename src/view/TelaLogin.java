@@ -2,10 +2,6 @@ package view;
 
 import dao.UserDAO;
 
-/**
- *
- * @author nathália lima
- */
 public class TelaLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
@@ -92,8 +88,8 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
-                .addComponent(bEntrar)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addComponent(bEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -103,17 +99,31 @@ public class TelaLogin extends javax.swing.JFrame {
     // Botão para entrar no sistema
     private void bEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEntrarActionPerformed
         String usuario, senha;
-        
+
         usuario = campoNome.getText();
-        senha = campoSenha.getText();
-        
+        senha = String.valueOf(campoSenha.getPassword());
+
         UserDAO dao = new UserDAO();
-        
+
         if (dao.login(usuario, senha)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Login realizado!");
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Login realizado!"
+            );
+
+            TelaMenu tela = new TelaMenu();
+            tela.setVisible(true);
+
+            dispose(); // fecha tela login
+
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!");
-        }   
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Usuário ou senha inválidos!"
+            );
+        }  
     }//GEN-LAST:event_bEntrarActionPerformed
 
     /**

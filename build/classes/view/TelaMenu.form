@@ -99,7 +99,7 @@
                       <Component id="bStatus" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="bFiltrar" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="110" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -119,6 +119,8 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="labelSistema" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="bSair" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -126,7 +128,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="labelSistema" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelSistema" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="bSair" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -146,6 +151,14 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sistema de Oficina"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="bSair">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sair"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSairActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -181,6 +194,9 @@
               <Dimension value="[150, 50]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBuscarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bEditar">
           <Properties>
