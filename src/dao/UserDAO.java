@@ -13,23 +13,19 @@ public class UserDAO {
     ) {
 
         String sql =
-            "SELECT * FROM users "
-          + "WHERE name_user = ? "
-          + "AND password_user = ?";
+                "SELECT * FROM usuarios "
+              + "WHERE nome_usuario = ? "
+              + "AND senha_usuario = ?";
 
-        try {
-
-            Connection conn =
-                    Conexao.conectar();
-
-            PreparedStatement stmt =
-                    conn.prepareStatement(sql);
+        try (
+                Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
 
             stmt.setString(1, usuario);
             stmt.setString(2, senha);
 
-            ResultSet rs =
-                    stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
             return rs.next();
 
