@@ -6,7 +6,6 @@ public class Carro extends Veiculo {
 
     private int quantidadePortas;
 
-    // 1. CONSTRUTOR COMPLETO (Usado quando buscamos os dados do Banco de Dados)
     public Carro(
             int idVeiculo,
             String nomeMotorista,
@@ -41,7 +40,6 @@ public class Carro extends Veiculo {
         this.quantidadePortas = quantidadePortas;
     }
 
-    // 2. CONSTRUTOR DE CADASTRO (Usado na sua TelaCadastrarCarro)
     public Carro(
             String nomeMotorista, 
             String cpfMotorista, 
@@ -50,13 +48,12 @@ public class Carro extends Veiculo {
             String placa, 
             String cor, 
             int ano, 
-            LocalDate dataChegada, // Usando LocalDate!
+            LocalDate dataChegada, 
             String motivo, 
             String diagnostico, 
             String statusCadastro, 
             int quantidadePortas
     ) {
-        // Passamos '0' para o idVeiculo e '"CARRO"' para o tipoVeiculo na classe Pai (Veiculo)
         super(
                 0, 
                 nomeMotorista, 

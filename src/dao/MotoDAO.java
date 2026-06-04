@@ -1,18 +1,18 @@
 package dao;
 
-import model.Carro;
+import model.Moto;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class CarroDAO {
+public class MotoDAO {
 
     private Connection conn;
 
-    public CarroDAO(Connection conn) {
+    public MotoDAO(Connection conn) {
         this.conn = conn;
     }
 
-    public void salvar(Carro carro) {
+    public void salvar(Moto moto) {
 
         if (conn == null) {
             System.out.println("Erro: conexão com banco é nula.");
@@ -24,26 +24,26 @@ public class CarroDAO {
                 "(nome_motorista, cpf_motorista, telefone_motorista, modelo, placa, cor, ano, data_chegada, motivo, diagnostico, tipo_veiculo, status_cadastro) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String sqlCarro =
-                "INSERT INTO carros (id_veiculo, quantidade_portas) VALUES (?, ?)";
+        String sqlMoto =
+                "INSERT INTO motos (id_veiculo, cilindradas) VALUES (?, ?)";
 
         try {
 
             conn.setAutoCommit(false);
-            
+
             int idVeiculo = 0;
 
             try (PreparedStatement stmtVeiculo = conn.prepareStatement(sqlVeiculo, Statement.RETURN_GENERATED_KEYS)) {
 
-                stmtVeiculo.setString(1, carro.getNomeMotorista());
-                stmtVeiculo.setString(2, carro.getCpfMotorista());
-                stmtVeiculo.setString(3, carro.getTelefoneMotorista());
-                stmtVeiculo.setString(4, carro.getModelo());
-                stmtVeiculo.setString(5, carro.getPlaca());
-                stmtVeiculo.setString(6, carro.getCor());
-                stmtVeiculo.setInt(7, carro.getAno());
+                stmtVeiculo.setString(1, moto.getNomeMotorista());
+                stmtVeiculo.setString(2, moto.getCpfMotorista());
+                stmtVeiculo.setString(3, moto.getTelefoneMotorista());
+                stmtVeiculo.setString(4, moto.getModelo());
+                stmtVeiculo.setString(5, moto.getPlaca());
+                stmtVeiculo.setString(6, moto.getCor());
+                stmtVeiculo.setInt(7, moto.getAno());
 
-                LocalDate data = carro.getDataChegada();
+                LocalDate data = moto.getDataChegada();
 
                 if (data == null) {
                     throw new RuntimeException("Data de chegada não pode ser vazia.");
@@ -51,10 +51,10 @@ public class CarroDAO {
 
                 stmtVeiculo.setDate(8, java.sql.Date.valueOf(data));
 
-                stmtVeiculo.setString(9, carro.getMotivo());
-                stmtVeiculo.setString(10, carro.getDiagnostico());
-                stmtVeiculo.setString(11, "CARRO");
-                stmtVeiculo.setString(12, carro.getStatusCadastro());
+                stmtVeiculo.setString(9, moto.getMotivo());
+                stmtVeiculo.setString(10, moto.getDiagnostico());
+                stmtVeiculo.setString(11, "MOTO");
+                stmtVeiculo.setString(12, moto.getStatusCadastro());
 
                 stmtVeiculo.executeUpdate();
 
@@ -65,12 +65,12 @@ public class CarroDAO {
                 }
             }
 
-            try (PreparedStatement stmtCarro = conn.prepareStatement(sqlCarro)) {
+            try (PreparedStatement stmtMoto = conn.prepareStatement(sqlMoto)) {
 
-                stmtCarro.setInt(1, idVeiculo);
-                stmtCarro.setInt(2, carro.getQuantidadePortas());
+                stmtMoto.setInt(1, idVeiculo);
+                stmtMoto.setInt(2, moto.getCilindradas());
 
-                stmtCarro.executeUpdate();
+                stmtMoto.executeUpdate();
             }
 
             conn.commit();
@@ -83,7 +83,7 @@ public class CarroDAO {
                 ex.printStackTrace();
             }
 
-            System.out.println("Erro ao salvar carro: " + e.getMessage());
+            System.out.println("Erro ao salvar moto: " + e.getMessage());
             e.printStackTrace();
         }
     }

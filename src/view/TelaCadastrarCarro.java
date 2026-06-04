@@ -2,7 +2,9 @@ package view;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+
 import model.Carro;
+import dao.CarroDAO;
 
 import java.util.Date;
 import javax.swing.*;
@@ -78,6 +80,7 @@ public class TelaCadastrarCarro extends JFrame {
         labelTitulo.setBounds(250, 20, 500, 40);
         painel.add(labelTitulo);
 
+        
         // NOME CLIENTE
         labelNomeCliente = new JLabel("Nome do Cliente:");
         labelNomeCliente.setBounds(80, 90, 150, 25);
@@ -87,6 +90,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoNomeCliente.setBounds(80, 120, 800, 35);
         painel.add(campoNomeCliente);
 
+        
         // CPF
         labelCPF = new JLabel("CPF:");
         labelCPF.setBounds(80, 175, 100, 25);
@@ -96,6 +100,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoCPF.setBounds(80, 205, 350, 35);
         painel.add(campoCPF);
 
+        
         // TELEFONE
         labelTelefone = new JLabel("Telefone:");
         labelTelefone.setBounds(530, 175, 100, 25);
@@ -105,6 +110,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoTelefone.setBounds(530, 205, 350, 35);
         painel.add(campoTelefone);
 
+        
         // MODELO
         labelModelo = new JLabel("Modelo:");
         labelModelo.setBounds(80, 265, 100, 25);
@@ -114,6 +120,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoModeloVeiculo.setBounds(80, 295, 350, 35);
         painel.add(campoModeloVeiculo);
 
+        
         // PLACA 
         labelPlaca = new JLabel("Placa:");
         labelPlaca.setBounds(530, 265, 100, 25);
@@ -123,6 +130,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoPlaca.setBounds(530, 295, 350, 35);
         painel.add(campoPlaca);
 
+        
         // COR
         labelCor = new JLabel("Cor:");
         labelCor.setBounds(80, 355, 100, 25);
@@ -141,6 +149,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoAnoVeiculo.setBounds(530, 385, 350, 35);
         painel.add(campoAnoVeiculo);
 
+        
         // PORTAS
         labelQuantidadePortas = new JLabel("Quantidade de Portas:");
         labelQuantidadePortas.setBounds(80, 445, 180, 25);
@@ -150,6 +159,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoQuantidadePortas.setBounds(80, 475, 350, 35);
         painel.add(campoQuantidadePortas);
 
+        
         // DATA CHEGADA
         labelDataChegada = new JLabel("Data de Chegada:");
         labelDataChegada.setBounds(530, 445, 150, 25);
@@ -163,6 +173,7 @@ public class TelaCadastrarCarro extends JFrame {
         campoDataChegada.setBounds(530, 475, 350, 35);
         painel.add(campoDataChegada);
 
+        
         // MOTIVO DA ENTRADA
         labelMotivoEntrada = new JLabel("Motivo da Entrada:");
         labelMotivoEntrada.setBounds(80, 535, 150, 25);
@@ -241,23 +252,46 @@ public class TelaCadastrarCarro extends JFrame {
             String modelo = campoModeloVeiculo.getText();
             String placa = campoPlaca.getText();
             String cor = campoCor.getText();
-            String aux = campoQuantidadePortas.getText();
-            int portas = Integer.parseInt(aux);
 
+            int portas = Integer.parseInt(campoQuantidadePortas.getText());
             int ano = Integer.parseInt(campoAnoVeiculo.getText());
 
             Date dataAntiga = (Date) campoDataChegada.getValue();
-            LocalDate data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate data = dataAntiga.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
 
             String motivo = campoMotivoEntrada.getText();
             String diagnostico = campoDiagnostico.getText();
+            String status = (String) comboStatus.getSelectedItem();
 
-            Carro novoCarro = new Carro(nomeCliente, cpf, celular, modelo, placa, cor, ano, data, motivo, diagnostico, "PENDENTE", portas);
+            Carro novoCarro = new Carro(
+                    nomeCliente,
+                    cpf,
+                    celular,
+                    modelo,
+                    placa,
+                    cor,
+                    ano,
+                    data,
+                    motivo,
+                    diagnostico,
+                    status,
+                    portas
+            );
+
+            CarroDAO dao = new CarroDAO(util.Conexao.conectar());
+            dao.salvar(novoCarro);
+
+            JOptionPane.showMessageDialog(this, "Carro salvo com sucesso!");
+
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Verifique os dados digitados. O ano deve conter apenas números e a data no formato dia/mês/ano.");
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao salvar. Verifique os dados.\n" + e.getMessage());
+            e.printStackTrace();
         }
     }
-
+    
     public static void main(String[] args) {
         new TelaCadastrarCarro();
     }

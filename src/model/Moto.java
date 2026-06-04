@@ -6,7 +6,6 @@ public class Moto extends Veiculo {
 
     private int cilindradas;
 
-    // 1. CONSTRUTOR COMPLETO (Usado quando buscamos os dados que já estão no Banco de Dados)
     public Moto(
             int idVeiculo,
             String nomeMotorista,
@@ -41,7 +40,6 @@ public class Moto extends Veiculo {
         this.cilindradas = cilindradas;
     }
 
-    // 2. CONSTRUTOR DE CADASTRO (O que faltava para a sua TelaCadastrarMoto funcionar!)
     public Moto(
             String nomeMotorista,
             String cpfMotorista,
@@ -56,7 +54,6 @@ public class Moto extends Veiculo {
             String statusCadastro,
             int cilindradas
     ) {
-        // Passamos '0' para o idVeiculo e "MOTO" para o tipoVeiculo direto para a classe Pai (Veiculo)
         super(
                 0,
                 nomeMotorista,
