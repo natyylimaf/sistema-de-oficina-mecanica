@@ -1,6 +1,10 @@
 package view;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.*;
+import model.Moto;
 
 public class TelaCadastrarMoto extends JFrame {
     // Declaração das variáveis
@@ -29,7 +33,8 @@ public class TelaCadastrarMoto extends JFrame {
     private JTextField campoCor;
     private JTextField campoAnoVeiculo;
     private JTextField campoCilindradas;
-    private JTextField campoDataChegada;
+    
+    private JSpinner campoDataChegada;
 
     private JTextArea campoMotivoEntrada;
     private JTextArea campoDiagnostico;
@@ -148,7 +153,7 @@ public class TelaCadastrarMoto extends JFrame {
         labelDataChegada.setBounds(530, 445, 150, 25);
         painel.add(labelDataChegada);
 
-        campoDataChegada = new JTextField();
+        campoDataChegada = new JSpinner();
         campoDataChegada.setBounds(530, 475, 350, 35);
         painel.add(campoDataChegada);
 
@@ -211,6 +216,7 @@ public class TelaCadastrarMoto extends JFrame {
         bSalvar.setBackground(java.awt.Color.BLACK);
         bSalvar.setForeground(java.awt.Color.WHITE);
         bSalvar.setBounds(650, 640, 120, 40);
+        bSalvar.addActionListener(this::bSalvarActionPerformed);
         painel.add(bSalvar);
 
         bCancelar = new JButton("Cancelar");
@@ -221,6 +227,30 @@ public class TelaCadastrarMoto extends JFrame {
         painel.add(bCancelar);
 
         painel.setPreferredSize(new java.awt.Dimension(980, 1200));
+    }
+    private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            String nomeCliente = campoNomeCliente.getText();
+            String cpf = campoCPF.getText();
+            String celular = campoTelefone.getText();
+            String modelo = campoModeloVeiculo.getText();
+            String placa = campoPlaca.getText();
+            String cor = campoCor.getText();
+            String aux = campoCilindradas.getText();
+            int cilindradas = Integer.parseInt(aux);
+
+            int ano = Integer.parseInt(campoAnoVeiculo.getText());
+
+            Date dataAntiga = (Date) campoDataChegada.getValue();
+            LocalDate data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            String motivo = campoMotivoEntrada.getText();
+            String diagnostico = campoDiagnostico.getText();
+
+            Moto novaMoto = new Moto(nomeCliente, cpf, celular, modelo, placa, cor, ano, data, motivo, diagnostico, "PENDENTE", cilindradas);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Verifique os dados digitados. O ano deve conter apenas números e a data no formato dia/mês/ano.");
+        }
     }
 
     public static void main(String[] args) {
