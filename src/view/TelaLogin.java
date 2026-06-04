@@ -1,6 +1,6 @@
 package view;
 
-import dao.UserDAO;
+import dao.UsuarioDAO;
 
 public class TelaLogin extends javax.swing.JFrame {
     
@@ -103,7 +103,7 @@ public class TelaLogin extends javax.swing.JFrame {
         usuario = campoNome.getText();
         senha = String.valueOf(campoSenha.getPassword());
 
-        UserDAO dao = new UserDAO();
+        UsuarioDAO dao = new UsuarioDAO();
 
         if (dao.login(usuario, senha)) {
 
