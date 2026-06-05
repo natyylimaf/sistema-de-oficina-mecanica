@@ -24,6 +24,7 @@ public class TelaLogin extends javax.swing.JFrame {
         setSize(1000, 700);
         setLocationRelativeTo(null);  // centraliza a janela na tela
         setResizable(false);  // impede que o usuário redimensione a janela
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);  // define que o programa será encerrado ao fechar a janela
 
         getContentPane().setBackground(java.awt.Color.WHITE);  // define a cor de fundo da janela como branca
     }
@@ -42,8 +43,6 @@ public class TelaLogin extends javax.swing.JFrame {
         campoSenha = new javax.swing.JPasswordField();
 
         bEntrar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);  // define que o programa será encerrado ao fechar a janela
 
         // Posicionamento absoluto
         setLayout(null);

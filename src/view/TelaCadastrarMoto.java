@@ -53,7 +53,7 @@ public class TelaCadastrarMoto extends JFrame {
         setSize(1000, 700);
         setLocationRelativeTo(null);
         setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         getContentPane().setBackground(java.awt.Color.WHITE);
 
@@ -232,7 +232,7 @@ public class TelaCadastrarMoto extends JFrame {
                         new String[]{
                                 "PENDENTE",
                                 "EM ANDAMENTO",
-                                "CONCLUÍDO"
+                                "PRONTO"
                         }
                 )
         );

@@ -18,6 +18,7 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         setSize(1000, 700);
         setLocationRelativeTo(null);
         setResizable(false);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         getContentPane().setBackground(java.awt.Color.WHITE);
     }
@@ -30,8 +31,6 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         bCadastrarCarro = new javax.swing.JButton();
         bCadastrarMoto = new javax.swing.JButton();
         bVoltar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         // Posicionamento absoluto
         setLayout(null);

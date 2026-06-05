@@ -3,6 +3,9 @@ package dao;
 import util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VeiculoDAO {
 
@@ -74,5 +77,108 @@ public class VeiculoDAO {
 
             return false;
         }
+    }
+    
+    
+    // Método responsável por buscar veículos com filtros
+    public List<Object[]> buscarVeiculos(
+            String pesquisa,
+            String tipo,
+            String status
+    ) {
+
+        List<Object[]> lista = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder(
+                "SELECT id_veiculo, tipo_veiculo, modelo, placa, "
+                + "nome_motorista, status_cadastro "
+                + "FROM veiculos WHERE 1=1 "
+        );
+
+        // Filtro de tipo
+        if (!tipo.equals("Todos")) {
+            sql.append(" AND tipo_veiculo = ? ");
+        }
+
+        // Filtro de status
+        if (!status.equals("Todos")) {
+
+            if (status.equals("DESATIVADO")) {
+                sql.append(" AND registro_ativo = FALSE ");
+            } else {
+                sql.append(" AND status_cadastro = ? ");
+                sql.append(" AND registro_ativo = TRUE ");
+            }
+
+        } else {
+            sql.append(" AND registro_ativo = TRUE ");
+        }
+
+        // Pesquisa
+        if (!pesquisa.trim().isEmpty()) {
+
+            sql.append(
+                    " AND ("
+                    + "nome_motorista LIKE ? "
+                    + "OR cpf_motorista LIKE ? "
+                    + "OR telefone_motorista LIKE ? "
+                    + "OR modelo LIKE ? "
+                    + "OR placa LIKE ?"
+                    + ")"
+            );
+        }
+
+        try (
+                Connection conn = Conexao.conectar();
+                PreparedStatement stmt =
+                        conn.prepareStatement(sql.toString())
+        ) {
+
+            int indice = 1;
+
+            if (!tipo.equals("Todos")) {
+                stmt.setString(indice++, tipo);
+            }
+
+            if (!status.equals("Todos")
+                    && !status.equals("DESATIVADO")) {
+
+                stmt.setString(indice++, status);
+            }
+
+            if (!pesquisa.trim().isEmpty()) {
+
+                String termo = "%" + pesquisa + "%";
+
+                stmt.setString(indice++, termo);
+                stmt.setString(indice++, termo);
+                stmt.setString(indice++, termo);
+                stmt.setString(indice++, termo);
+                stmt.setString(indice++, termo);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                lista.add(new Object[]{
+                    rs.getInt("id_veiculo"),
+                    rs.getString("tipo_veiculo"),
+                    rs.getString("modelo"),
+                    rs.getString("placa"),
+                    rs.getString("nome_motorista"),
+                    rs.getString("status_cadastro")
+                });
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Erro ao buscar veículos: "
+                    + e.getMessage()
+            );
+        }
+
+        return lista;
     }
 }

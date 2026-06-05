@@ -17,6 +17,7 @@ public class TelaMenu extends javax.swing.JFrame {
         setSize(1000, 700);
         setLocationRelativeTo(null);
         setResizable(false);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         getContentPane().setBackground(java.awt.Color.WHITE);
     }
@@ -29,8 +30,6 @@ public class TelaMenu extends javax.swing.JFrame {
         bCadastrarVeiculo = new javax.swing.JButton();
         bBuscarVeiculo = new javax.swing.JButton();
         bSair = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         // Usar posicionamento absoluto
         setLayout(null);
