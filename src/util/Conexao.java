@@ -10,6 +10,7 @@ public class Conexao {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
+    // Método responsável por criar e retornar uma conexão com o banco
     public static Connection conectar() {
         try {
             return DriverManager.getConnection(

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 
 public class VeiculoDAO {
 
+    // Método responsável por salvar um veículo no banco de dados
     public boolean salvar(
 
             String nomeMotorista,
@@ -22,6 +23,7 @@ public class VeiculoDAO {
 
     ) {
 
+        // Comando SQL para inserir os dados na tabela veiculos
         String sql =
                 "INSERT INTO veiculos ("
               + "nome_motorista, "
@@ -38,10 +40,13 @@ public class VeiculoDAO {
               + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
+                // Cria a conexão com o banco de dados
                 Connection conn = Conexao.conectar();
+                // Prepara o comando SQL
                 PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
 
+            // Define os valores que substituirão os parâmetros (?) da query
             stmt.setString(1, nomeMotorista);
             stmt.setString(2, cpfMotorista);
             stmt.setString(3, telefoneMotorista);
@@ -54,8 +59,10 @@ public class VeiculoDAO {
             stmt.setString(10, diagnostico);
             stmt.setString(11, tipoVeiculo);
 
+            // Executa o comando INSERT no banco
             stmt.executeUpdate();
 
+            // Retorna true indicando que o cadastro foi realizado com sucesso
             return true;
 
         } catch (Exception e) {

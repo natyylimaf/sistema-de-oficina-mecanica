@@ -20,9 +20,6 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         setResizable(false);
 
         getContentPane().setBackground(java.awt.Color.WHITE);
-
-        labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        labelSubTitulo.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     private void initComponents() {
@@ -42,12 +39,14 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         // TÍTULO
         labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 36));
         labelTitulo.setText("CADASTRAR VEÍCULO");
+        labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         labelTitulo.setBounds(200, 70, 600, 50);
         add(labelTitulo);
 
         // SUBTÍTULO
         labelSubTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 24));
         labelSubTitulo.setText("Selecione o tipo de veículo");
+        labelSubTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         labelSubTitulo.setBounds(250, 135, 500, 35);
         add(labelSubTitulo);
 

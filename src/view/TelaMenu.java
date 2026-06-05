@@ -19,9 +19,6 @@ public class TelaMenu extends javax.swing.JFrame {
         setResizable(false);
 
         getContentPane().setBackground(java.awt.Color.WHITE);
-
-        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSubTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     }
 
     private void initComponents() {
@@ -42,12 +39,14 @@ public class TelaMenu extends javax.swing.JFrame {
         // TÍTULO
         labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 36));
         labelTitulo.setText("MENU PRINCIPAL");
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setBounds(200, 80, 600, 50);
         add(labelTitulo);
 
         // SUBTÍTULO
         labelSubTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 24));
         labelSubTitulo.setText("Seja bem-vindo!");
+        labelSubTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelSubTitulo.setBounds(250, 145, 500, 35);
         add(labelSubTitulo);
 

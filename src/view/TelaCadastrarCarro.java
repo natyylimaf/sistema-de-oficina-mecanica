@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.swing.*;
 
 public class TelaCadastrarCarro extends JFrame {
-
     // Declaração das variáveis
     private JPanel painel;
 
@@ -83,6 +82,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // NOME CLIENTE
         labelNomeCliente = new JLabel("Nome do Cliente:");
+        labelNomeCliente.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelNomeCliente.setBounds(80, 90, 150, 25);
         painel.add(labelNomeCliente);
 
@@ -93,6 +93,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // CPF
         labelCPF = new JLabel("CPF:");
+        labelCPF.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelCPF.setBounds(80, 175, 100, 25);
         painel.add(labelCPF);
 
@@ -103,6 +104,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // TELEFONE
         labelTelefone = new JLabel("Telefone:");
+        labelTelefone.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelTelefone.setBounds(530, 175, 100, 25);
         painel.add(labelTelefone);
 
@@ -113,6 +115,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // MODELO
         labelModelo = new JLabel("Modelo:");
+        labelModelo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelModelo.setBounds(80, 265, 100, 25);
         painel.add(labelModelo);
 
@@ -123,6 +126,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // PLACA 
         labelPlaca = new JLabel("Placa:");
+        labelPlaca.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelPlaca.setBounds(530, 265, 100, 25);
         painel.add(labelPlaca);
 
@@ -133,6 +137,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // COR
         labelCor = new JLabel("Cor:");
+        labelCor.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelCor.setBounds(80, 355, 100, 25);
         painel.add(labelCor);
 
@@ -142,6 +147,7 @@ public class TelaCadastrarCarro extends JFrame {
 
         // ANO
         labelAno = new JLabel("Ano:");
+        labelAno.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelAno.setBounds(530, 355, 100, 25);
         painel.add(labelAno);
 
@@ -152,6 +158,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // PORTAS
         labelQuantidadePortas = new JLabel("Quantidade de Portas:");
+        labelQuantidadePortas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelQuantidadePortas.setBounds(80, 445, 180, 25);
         painel.add(labelQuantidadePortas);
 
@@ -162,6 +169,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // DATA CHEGADA
         labelDataChegada = new JLabel("Data de Chegada:");
+        labelDataChegada.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelDataChegada.setBounds(530, 445, 150, 25);
         painel.add(labelDataChegada);
         
@@ -176,6 +184,7 @@ public class TelaCadastrarCarro extends JFrame {
         
         // MOTIVO DA ENTRADA
         labelMotivoEntrada = new JLabel("Motivo da Entrada:");
+        labelMotivoEntrada.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelMotivoEntrada.setBounds(80, 535, 150, 25);
         painel.add(labelMotivoEntrada);
 
@@ -192,6 +201,7 @@ public class TelaCadastrarCarro extends JFrame {
 
         // DIAGNÓSTICO
         labelDiagnostico = new JLabel("Diagnóstico:");
+        labelDiagnostico.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelDiagnostico.setBounds(530, 535, 120, 25);
         painel.add(labelDiagnostico);
 
@@ -208,6 +218,7 @@ public class TelaCadastrarCarro extends JFrame {
 
         // STATUS
         labelStatus = new JLabel("Status:");
+        labelStatus.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelStatus.setBounds(80, 640, 100, 25);
         painel.add(labelStatus);
 
@@ -244,27 +255,42 @@ public class TelaCadastrarCarro extends JFrame {
         painel.setPreferredSize(new java.awt.Dimension(980, 1200));
     }
 
+    
+    // Método executado quando o botão "Salvar" é clicado
     private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {
+        String nomeCliente, cpf, celular, modelo, placa, cor, motivo, diagnostico, status;
+        int portas, ano;
+        Date dataAntiga;
+        LocalDate data;
+        
+        
         try {
-            String nomeCliente = campoNomeCliente.getText();
-            String cpf = campoCPF.getText();
-            String celular = campoTelefone.getText();
-            String modelo = campoModeloVeiculo.getText();
-            String placa = campoPlaca.getText();
-            String cor = campoCor.getText();
+            // Obtém os dados dos campos de texto
+            nomeCliente = campoNomeCliente.getText();
+            cpf = campoCPF.getText();
+            celular = campoTelefone.getText();
+            modelo = campoModeloVeiculo.getText();
+            placa = campoPlaca.getText();
+            cor = campoCor.getText();
 
-            int portas = Integer.parseInt(campoQuantidadePortas.getText());
-            int ano = Integer.parseInt(campoAnoVeiculo.getText());
+            // Converte os campos numéricos de String para int
+            portas = Integer.parseInt(campoQuantidadePortas.getText());
+            ano = Integer.parseInt(campoAnoVeiculo.getText());
 
-            Date dataAntiga = (Date) campoDataChegada.getValue();
-            LocalDate data = dataAntiga.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+            
+            // Obtém a data selecionada no JSpinner
+            dataAntiga = (Date) campoDataChegada.getValue();
+            
+            // Converte Date para LocalDate
+            data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            String motivo = campoMotivoEntrada.getText();
-            String diagnostico = campoDiagnostico.getText();
-            String status = (String) comboStatus.getSelectedItem();
+            
+            // Obtém os textos dos campos de descrição
+            motivo = campoMotivoEntrada.getText();
+            diagnostico = campoDiagnostico.getText();
+            status = (String) comboStatus.getSelectedItem();
 
+            // Cria um objeto Carro com os dados informados
             Carro novoCarro = new Carro(
                     nomeCliente,
                     cpf,
@@ -280,14 +306,18 @@ public class TelaCadastrarCarro extends JFrame {
                     portas
             );
 
+            // Cria o objetoDAO responsável pela comunicação com o banco
             CarroDAO dao = new CarroDAO(util.Conexao.conectar());
+            // Salva a moto no banco de dados
             dao.salvar(novoCarro);
 
+            // Exibe mensagem de sucesso
             JOptionPane.showMessageDialog(this, "Carro salvo com sucesso!");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Erro ao salvar. Verifique os dados.\n" + e.getMessage());
+            // Exibe mensagem de erro caso ocorra alguma exceção
+            JOptionPane.showMessageDialog(this, "Erro ao salvar. Verifique os dados.\n" + e.getMessage());
+            
             e.printStackTrace();
         }
     }
