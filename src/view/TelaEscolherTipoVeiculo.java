@@ -55,6 +55,7 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         bCadastrarCarro.setForeground(java.awt.Color.BLACK);
         bCadastrarCarro.setText("Cadastrar Carro");
         bCadastrarCarro.setBounds(275, 250, 450, 90);
+        bCadastrarCarro.addActionListener(this::bCadastrarCarroPerformed);
         add(bCadastrarCarro);
 
         // BOTÃO CADASTRAR MOTO
@@ -63,6 +64,7 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         bCadastrarMoto.setForeground(java.awt.Color.BLACK);
         bCadastrarMoto.setText("Cadastrar Moto");
         bCadastrarMoto.setBounds(275, 380, 450, 90);
+        bCadastrarMoto.addActionListener(this::bCadastrarMotoPerformed);
         add(bCadastrarMoto);
 
         // BOTÃO VOLTAR
@@ -71,6 +73,7 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         bVoltar.setForeground(java.awt.Color.WHITE);
         bVoltar.setText("Voltar");
         bVoltar.setBounds(410, 530, 180, 55);
+        bVoltar.addActionListener(this::bVoltarActionPerformed);
         add(bVoltar);
     }
 
@@ -78,5 +81,20 @@ public class TelaEscolherTipoVeiculo extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaEscolherTipoVeiculo().setVisible(true);
         });
+    }
+    private void bCadastrarCarroPerformed(java.awt.event.ActionEvent evt) {
+        TelaCadastrarCarro tela = new TelaCadastrarCarro();
+        tela.setVisible(true);
+        dispose();
+    }
+    private void bCadastrarMotoPerformed(java.awt.event.ActionEvent evt) {
+        TelaCadastrarMoto tela = new TelaCadastrarMoto();
+        tela.setVisible(true);
+        dispose();
+    }
+    private void bVoltarActionPerformed(java.awt.event.ActionEvent evt){
+        TelaMenu tela = new TelaMenu();
+        tela.setVisible(true);
+        dispose();
     }
 }

@@ -155,6 +155,7 @@ public class TelaBuscarVeiculos extends JFrame {
         bVoltar.setBounds(760, 580, 130, 40);
         bVoltar.setBackground(java.awt.Color.BLACK);
         bVoltar.setForeground(java.awt.Color.WHITE);
+        bVoltar.addActionListener(this::bVoltarActionPerformed);
         painel.add(bVoltar);
         
         // Clique no botão Buscar
@@ -191,5 +192,9 @@ public class TelaBuscarVeiculos extends JFrame {
     public static void main(String[] args) {
         new TelaBuscarVeiculos();
     }
-    
+    private void bVoltarActionPerformed(java.awt.event.ActionEvent evt){
+        TelaMenu tela = new TelaMenu();
+        tela.setVisible(true);
+        dispose();
+    }
 }

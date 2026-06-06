@@ -127,4 +127,10 @@ public class TelaLogin extends javax.swing.JFrame {
             labelErro.setText("Usuário ou senha inválidos!");
         }
     }
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaLogin().setVisible(true);
+        });
+    }
+    
 }

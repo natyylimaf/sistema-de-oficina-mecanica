@@ -55,6 +55,7 @@ public class TelaMenu extends javax.swing.JFrame {
         bCadastrarVeiculo.setForeground(java.awt.Color.BLACK);
         bCadastrarVeiculo.setText("Cadastrar Veículo");
         bCadastrarVeiculo.setBounds(275, 280, 450, 90);
+        bCadastrarVeiculo.addActionListener(this::bCadastrarVeiculoActionPerformed);
         add(bCadastrarVeiculo);
 
         // BOTÃO BUSCAR VEÍCULO
@@ -63,6 +64,7 @@ public class TelaMenu extends javax.swing.JFrame {
         bBuscarVeiculo.setForeground(java.awt.Color.BLACK);
         bBuscarVeiculo.setText("Buscar Veículo");
         bBuscarVeiculo.setBounds(275, 400, 450,90);
+        bBuscarVeiculo.addActionListener(this::bBuscarVeiculoActionPerformed);
         add(bBuscarVeiculo);
         
         // BOTÃO SAIR
@@ -72,5 +74,20 @@ public class TelaMenu extends javax.swing.JFrame {
         bSair.setText("Sair");
         bSair.setBounds( 410, 530, 180, 55);
         add(bSair);
+    }
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaMenu().setVisible(true);
+        });
+    }
+     private void bCadastrarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {
+        TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
+        tela.setVisible(true);
+        dispose();
+    }
+    private void bBuscarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {
+        TelaBuscarVeiculos tela = new TelaBuscarVeiculos();
+        tela.setVisible(true);
+        dispose();
     }
 }

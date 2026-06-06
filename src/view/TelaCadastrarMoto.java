@@ -255,6 +255,7 @@ public class TelaCadastrarMoto extends JFrame {
         bCancelar.setBackground(java.awt.Color.WHITE);
         bCancelar.setForeground(java.awt.Color.BLACK);
         bCancelar.setBounds(790, 640, 140, 40);
+        bCancelar.addActionListener(this::bCancelarActionPerformed);
         painel.add(bCancelar);
 
         painel.setPreferredSize(new java.awt.Dimension(980, 1200));
@@ -329,5 +330,10 @@ public class TelaCadastrarMoto extends JFrame {
 
     public static void main(String[] args) {
         new TelaCadastrarMoto();
+    }
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt){
+        TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
+        tela.setVisible(true);
+        dispose();
     }
 }
