@@ -73,6 +73,7 @@ public class TelaMenu extends javax.swing.JFrame {
         bSair.setForeground(java.awt.Color.WHITE);
         bSair.setText("Sair");
         bSair.setBounds( 410, 530, 180, 55);
+        bSair.addActionListener(this::bSairActionPerformed);
         add(bSair);
     }
     public static void main(String args[]) {
@@ -90,4 +91,10 @@ public class TelaMenu extends javax.swing.JFrame {
         tela.setVisible(true);
         dispose();
     }
+    private void bSairActionPerformed(java.awt.event.ActionEvent evt){
+    TelaLogin tela = new TelaLogin();
+    tela.setVisible(true);
+    dispose();
+    }
+    
 }
