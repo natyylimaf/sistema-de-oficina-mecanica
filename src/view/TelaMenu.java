@@ -91,10 +91,11 @@ public class TelaMenu extends javax.swing.JFrame {
         tela.setVisible(true);
         dispose();
     }
+    
     private void bSairActionPerformed(java.awt.event.ActionEvent evt){
-    TelaLogin tela = new TelaLogin();
-    tela.setVisible(true);
-    dispose();
+        TelaLogin tela = new TelaLogin();
+        tela.setVisible(true);
+        dispose();
     }
     
 }

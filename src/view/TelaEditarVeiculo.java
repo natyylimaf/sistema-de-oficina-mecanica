@@ -1,14 +1,8 @@
 package view;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import javax.swing.*;
 
-import model.Moto;
-import dao.MotoDAO;
-
-public class TelaCadastrarMoto extends JFrame {
+public class TelaEditarVeiculo extends JFrame {
     // Declaração das variáveis
     private JPanel painel;
 
@@ -21,6 +15,7 @@ public class TelaCadastrarMoto extends JFrame {
     private JLabel labelPlaca;
     private JLabel labelCor;
     private JLabel labelAno;
+    private JLabel labelQuantidadePortas;
     private JLabel labelCilindradas;
     private JLabel labelDataChegada;
     private JLabel labelMotivoEntrada;
@@ -30,12 +25,13 @@ public class TelaCadastrarMoto extends JFrame {
     private JTextField campoNomeMotorista;
     private JTextField campoCPF;
     private JTextField campoTelefone;
-    private JTextField campoModeloVeiculo;
+    private JTextField campoModelo;
     private JTextField campoPlaca;
     private JTextField campoCor;
-    private JTextField campoAnoVeiculo;
+    private JTextField campoAno;
+    private JTextField campoQuantidadePortas;
     private JTextField campoCilindradas;
-    
+
     private JSpinner campoDataChegada;
 
     private JTextArea campoMotivoEntrada;
@@ -46,8 +42,8 @@ public class TelaCadastrarMoto extends JFrame {
     private JButton bSalvar;
     private JButton bCancelar;
 
-    // Construtor da tela
-    public TelaCadastrarMoto() {
+    
+    public TelaEditarVeiculo() {
         initComponents();
 
         setSize(1000, 700);
@@ -72,12 +68,12 @@ public class TelaCadastrarMoto extends JFrame {
         setContentPane(scrollTela);
 
         // TÍTULO
-        labelTitulo = new JLabel("CADASTRAR MOTO");
+        labelTitulo = new JLabel("EDITAR VEÍCULO");
         labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 36));
         labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         labelTitulo.setBounds(250, 20, 500, 40);
         painel.add(labelTitulo);
-
+        
         
         // NOME DO MOTORISTA
         labelNomeMotorista = new JLabel("Nome do Motorista:");
@@ -118,9 +114,9 @@ public class TelaCadastrarMoto extends JFrame {
         labelModelo.setBounds(80, 265, 100, 25);
         painel.add(labelModelo);
 
-        campoModeloVeiculo = new JTextField();
-        campoModeloVeiculo.setBounds(80, 295, 350, 35);
-        painel.add(campoModeloVeiculo);
+        campoModelo = new JTextField();
+        campoModelo.setBounds(80, 295, 350, 35);
+        painel.add(campoModelo);
 
         
         // PLACA
@@ -143,7 +139,7 @@ public class TelaCadastrarMoto extends JFrame {
         campoCor = new JTextField();
         campoCor.setBounds(80, 385, 350, 35);
         painel.add(campoCor);
-
+        
         
         // ANO
         labelAno = new JLabel("Ano:");
@@ -151,10 +147,20 @@ public class TelaCadastrarMoto extends JFrame {
         labelAno.setBounds(530, 355, 100, 25);
         painel.add(labelAno);
 
-        campoAnoVeiculo = new JTextField();
-        campoAnoVeiculo.setBounds(530, 385, 350, 35);
-        painel.add(campoAnoVeiculo);
+        campoAno = new JTextField();
+        campoAno.setBounds(530, 385, 350, 35);
+        painel.add(campoAno);
+        
+        // QUANTIDADE DE PORTAS
+        labelQuantidadePortas = new JLabel("Quantidade de Portas:");
+        labelQuantidadePortas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        labelQuantidadePortas.setBounds(80, 445, 180, 25);
+        painel.add(labelQuantidadePortas);
 
+        campoQuantidadePortas = new JTextField();
+        campoQuantidadePortas.setBounds(80, 475, 350, 35);
+        painel.add(campoQuantidadePortas);
+        
         
         // CILINDRADAS
         labelCilindradas = new JLabel("Cilindradas:");
@@ -167,17 +173,17 @@ public class TelaCadastrarMoto extends JFrame {
         painel.add(campoCilindradas);
 
         
-        // DATA CHEGADA
+        // DATA
         labelDataChegada = new JLabel("Data de Chegada:");
         labelDataChegada.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelDataChegada.setBounds(530, 445, 150, 25);
         painel.add(labelDataChegada);
-
+        
         campoDataChegada = new JSpinner(new SpinnerDateModel());
 
         JSpinner.DateEditor editor = new JSpinner.DateEditor(campoDataChegada, "dd/MM/yyyy");
         campoDataChegada.setEditor(editor);
-        
+
         campoDataChegada.setBounds(530, 475, 350, 35);
         painel.add(campoDataChegada);
 
@@ -196,7 +202,6 @@ public class TelaCadastrarMoto extends JFrame {
 
         campoMotivoEntrada.setLineWrap(true);
         campoMotivoEntrada.setWrapStyleWord(true);
-
         scrollMotivoEntrada.setBounds(80, 565, 350, 60);
         painel.add(scrollMotivoEntrada);
 
@@ -215,7 +220,6 @@ public class TelaCadastrarMoto extends JFrame {
 
         campoDiagnostico.setLineWrap(true);
         campoDiagnostico.setWrapStyleWord(true);
-
         scrollDiagnostico.setBounds(530, 565, 350, 60);
         painel.add(scrollDiagnostico);
 
@@ -230,9 +234,9 @@ public class TelaCadastrarMoto extends JFrame {
         comboStatus.setModel(
                 new DefaultComboBoxModel<>(
                         new String[]{
-                                "PENDENTE",
-                                "EM ANDAMENTO",
-                                "PRONTO"
+                            "PENDENTE",
+                            "EM ANDAMENTO",
+                            "PRONTO"
                         }
                 )
         );
@@ -241,15 +245,14 @@ public class TelaCadastrarMoto extends JFrame {
         painel.add(comboStatus);
 
         
-        // BOTÃO SALVAR
-        bSalvar = new JButton("Salvar");
+        // BOTÃO SALVAR ALTERAÇÕES
+        bSalvar = new JButton("Salvar Alterações");
         bSalvar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
         bSalvar.setBackground(java.awt.Color.BLACK);
         bSalvar.setForeground(java.awt.Color.WHITE);
-        bSalvar.setBounds(580, 650, 140, 40);
-        bSalvar.addActionListener(this::bSalvarActionPerformed);
+        bSalvar.setBounds(540, 650, 180, 40);
         painel.add(bSalvar);
-
+        
         
         // BOTÃO CANCELAR
         bCancelar = new JButton("Cancelar");
@@ -257,85 +260,14 @@ public class TelaCadastrarMoto extends JFrame {
         bCancelar.setBackground(java.awt.Color.WHITE);
         bCancelar.setForeground(java.awt.Color.BLACK);
         bCancelar.setBounds(738, 650, 140, 40);
-        bCancelar.addActionListener(this::bCancelarActionPerformed);
         painel.add(bCancelar);
 
-        painel.setPreferredSize(new java.awt.Dimension(980, 1200));
-    }
-    
-    // Método executado quando o botão "Salvar" é clicado
-    private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {
-        String nomeMotorista, cpf, celular, modelo, placa, cor, motivo, diagnostico, status;
-        int cilindradas, ano;
-        Date dataAntiga;
-        LocalDate data;
         
-        try {
-            // Obtém os dados dos campos de texto
-            nomeMotorista = campoNomeMotorista.getText();
-            cpf = campoCPF.getText();
-            celular = campoTelefone.getText();
-            modelo = campoModeloVeiculo.getText();
-            placa = campoPlaca.getText();
-            cor = campoCor.getText();
-
-            // Converte os campos numéricos de String para int
-            cilindradas = Integer.parseInt(campoCilindradas.getText());
-            ano = Integer.parseInt(campoAnoVeiculo.getText());
-
-            
-            // Obtém a data selecionada no JSpinner
-            dataAntiga = (Date) campoDataChegada.getValue();
-            
-            // Converte Date para LocalDate
-            data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-            
-            // Obtém os textos dos campos de descrição
-            motivo = campoMotivoEntrada.getText();
-            diagnostico = campoDiagnostico.getText();
-            
-            // Obtém o status selecionado no ComboBox
-            status = (String) comboStatus.getSelectedItem();
-
-            // Cria um objeto Moto com os dados informados
-            Moto novaMoto = new Moto(
-                    nomeMotorista,
-                    cpf,
-                    celular,
-                    modelo,
-                    placa,
-                    cor,
-                    ano,
-                    data,
-                    motivo,
-                    diagnostico,
-                    status,
-                    cilindradas
-            );
-
-            // Cria o objetoDAO responsável pela comunicação com o banco
-            MotoDAO dao = new MotoDAO(util.Conexao.conectar());
-            // Salva a moto no banco de dados
-            dao.salvar(novaMoto);
-
-            // Exibe mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Moto salva com sucesso!");
-
-        } catch (Exception e) {
-            // Exibe mensagem de erro caso ocorra alguma exceção
-            JOptionPane.showMessageDialog(this, "Erro ao salvar moto. Verifique os dados.\n" + e.getMessage());
-            
-            e.printStackTrace();
-        }
+        
+        painel.setPreferredSize(new java.awt.Dimension(980, 1200));
     }
 
     public static void main(String[] args) {
-        new TelaCadastrarMoto();
-    }
-    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt){
-        TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
-        tela.setVisible(true);
-        dispose();
+        new TelaEditarVeiculo();
     }
 }
