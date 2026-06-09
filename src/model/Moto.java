@@ -3,8 +3,9 @@ package model;
 import java.time.LocalDate;
 
 public class Moto extends Veiculo {
-
     private int cilindradas;
+    private double orcamento;
+    private static final double MAO_DE_OBRA = 500.0;
 
     public Moto(
             int idVeiculo,
@@ -40,6 +41,7 @@ public class Moto extends Veiculo {
         this.cilindradas = cilindradas;
     }
 
+    
     public Moto(
             String nomeMotorista,
             String cpfMotorista,
@@ -72,32 +74,40 @@ public class Moto extends Veiculo {
         this.cilindradas = cilindradas;
     }
 
-    @Override
-    public double gerarOrcamento() {
-        return 500.00;
-    }
+    
+    public int getCilindradas() { return cilindradas; }
+    public void setCilindradas(int cilindradas) { this.cilindradas = cilindradas; }
+    
+    public double getOrcamento() { return orcamento; }
+    
+    public static double getMaoDeObra() { return MAO_DE_OBRA; }
 
-    public int getCilindradas() {
-        return cilindradas;
-    }
-
-    public void setCilindradas(int cilindradas) {
-        this.cilindradas = cilindradas;
-    }
-
+    
     @Override
     public String toString() {
-        return "Moto [cilindradas=" + cilindradas + ", gerarOrcamento()=" + gerarOrcamento() + ", getCilindradas()="
-                + getCilindradas() + ", getIdVeiculo()=" + getIdVeiculo() + ", getNomeMotorista()="
-                + getNomeMotorista()
-                + ", getCpfMotorista()=" + getCpfMotorista() + ", getTelefoneMotorista()="
-                + getTelefoneMotorista()
-                + ", getModelo()=" + getModelo() + ", getPlaca()=" + getPlaca() + ", getCor()=" + getCor()
-                + ", getAno()=" + getAno() + ", getDataChegada()=" + getDataChegada() + ", getMotivo()="
-                + getMotivo()
-                + ", getClass()=" + getClass() + ", getDiagnostico()=" + getDiagnostico()
-                + ", getTipoVeiculo()="
-                + getTipoVeiculo() + ", getStatusCadastro()=" + getStatusCadastro() + ", isRegistroAtivo()="
-                + isRegistroAtivo() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+        return "Moto{" +
+                "idVeiculo=" + getIdVeiculo() +
+                ", nomeMotorista='" + getNomeMotorista() + '\'' +
+                ", cpfMotorista='" + getCpfMotorista() + '\'' +
+                ", telefoneMotorista='" + getTelefoneMotorista() + '\'' +
+                ", modelo='" + getModelo() + '\'' +
+                ", placa='" + getPlaca() + '\'' +
+                ", cor='" + getCor() + '\'' +
+                ", ano=" + getAno() +
+                ", dataChegada=" + getDataChegada() +
+                ", motivo='" + getMotivo() + '\'' +
+                ", diagnostico='" + getDiagnostico() + '\'' +
+                ", tipoVeiculo='" + getTipoVeiculo() + '\'' +
+                ", statusCadastro='" + getStatusCadastro() + '\'' +
+                ", cilindradas=" + getCilindradas() +
+                ", orcamento=" + getOrcamento() +
+                '}';
+    }
+    
+    
+    @Override
+    public double gerarOrcamento(double valorPecas) {
+        orcamento = MAO_DE_OBRA + valorPecas;
+        return orcamento;
     }
 }

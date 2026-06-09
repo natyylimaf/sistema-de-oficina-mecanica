@@ -3,8 +3,9 @@ package model;
 import java.time.LocalDate;
 
 public class Carro extends Veiculo {
-
     private int quantidadePortas;
+    private double orcamento;
+    private static final double MAO_DE_OBRA = 850.0;
 
     public Carro(
             int idVeiculo,
@@ -40,6 +41,7 @@ public class Carro extends Veiculo {
         this.quantidadePortas = quantidadePortas;
     }
 
+    
     public Carro(
             String nomeMotorista, 
             String cpfMotorista, 
@@ -72,29 +74,40 @@ public class Carro extends Veiculo {
         this.quantidadePortas = quantidadePortas;
     }
 
-    @Override
-    public double gerarOrcamento() {
-        return 850.00;
-    }
+    
+    public int getQuantidadePortas() { return quantidadePortas; }
+    public void setQuantidadePortas(int quantidadePortas) { this.quantidadePortas = quantidadePortas; }
+    
+    public double getOrcamento() { return orcamento; }
+    
+    public static double getMaoDeObra() { return MAO_DE_OBRA; }
 
-    public int getQuantidadePortas() {
-        return quantidadePortas;
-    }
-
-    public void setQuantidadePortas(int quantidadePortas) {
-        this.quantidadePortas = quantidadePortas;
-    }
-
+    
     @Override
     public String toString() {
-        return "Carro [quantidadePortas=" + quantidadePortas + ", gerarOrcamento()=" + gerarOrcamento()
-                + ", getQuantidadePortas()=" + getQuantidadePortas() + ", getIdVeiculo()=" + getIdVeiculo()
-                + ", getNomeMotorista()=" + getNomeMotorista() + ", getCpfMotorista()=" + getCpfMotorista()
-                + ", getTelefoneMotorista()=" + getTelefoneMotorista() + ", getModelo()=" + getModelo()
-                + ", getPlaca()=" + getPlaca() + ", getCor()=" + getCor() + ", getAno()=" + getAno()
-                + ", getDataChegada()=" + getDataChegada() + ", getMotivo()=" + getMotivo() + ", getClass()="
-                + getClass() + ", getDiagnostico()=" + getDiagnostico() + ", getTipoVeiculo()=" + getTipoVeiculo()
-                + ", getStatusCadastro()=" + getStatusCadastro() + ", isRegistroAtivo()=" + isRegistroAtivo()
-                + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+        return "Carro{" +
+                "idVeiculo=" + getIdVeiculo() +
+                ", nomeMotorista='" + getNomeMotorista() + '\'' +
+                ", cpfMotorista='" + getCpfMotorista() + '\'' +
+                ", telefoneMotorista='" + getTelefoneMotorista() + '\'' +
+                ", modelo='" + getModelo() + '\'' +
+                ", placa='" + getPlaca() + '\'' +
+                ", cor='" + getCor() + '\'' +
+                ", ano=" + getAno() +
+                ", dataChegada=" + getDataChegada() +
+                ", motivo='" + getMotivo() + '\'' +
+                ", diagnostico='" + getDiagnostico() + '\'' +
+                ", tipoVeiculo='" + getTipoVeiculo() + '\'' +
+                ", statusCadastro='" + getStatusCadastro() + '\'' +
+                ", quantidadePortas=" + getQuantidadePortas() +
+                ", orcamento=" + getOrcamento() +
+                '}';
+    }
+    
+    
+    @Override
+    public double gerarOrcamento(double valorPecas) {
+        orcamento = MAO_DE_OBRA + valorPecas;
+        return orcamento;
     }
 }

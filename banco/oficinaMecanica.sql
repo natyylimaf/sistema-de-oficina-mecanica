@@ -27,7 +27,7 @@ CREATE TABLE veiculos(
 
     data_chegada DATE NOT NULL,
 
-    motivo TEXT NOT NULL,
+    motivo TEXT,
     diagnostico TEXT NOT NULL,
 
     tipo_veiculo VARCHAR(20) NOT NULL,
@@ -64,11 +64,28 @@ CREATE TABLE motos(
 );
 
 -- ==========================
+-- TABELA DE ORÇAMENTOS
+-- ==========================
+CREATE TABLE orcamentoVeiculo(
+    id_orcamento INT PRIMARY KEY AUTO_INCREMENT,
+
+    mao_obra DECIMAL(10,2) DEFAULT 0.00,
+    valor_pecas DECIMAL(10,2) DEFAULT 0.00,
+    valor_total DECIMAL(10,2) DEFAULT 0.00,
+
+    id_veiculo INT NOT NULL,
+
+    FOREIGN KEY(id_veiculo)
+    REFERENCES veiculos(id_veiculo)
+);
+
+
+
+-- ==========================
 -- USUÁRIO PADRÃO
 -- ==========================
 INSERT INTO usuarios(nome_usuario, senha_usuario)
 VALUES ('admin', '123');
-
 
 -- ==========================
 -- VEÍCULO 1 - CARRO
@@ -302,11 +319,3 @@ VALUES(
 
 INSERT INTO carros(id_veiculo, quantidade_portas)
 VALUES (7, 4);
-
--- ==========================
--- CONSULTAS
--- ==========================
-SELECT * FROM usuarios;
-SELECT * FROM veiculos;
-SELECT * FROM carros;
-SELECT * FROM motos;

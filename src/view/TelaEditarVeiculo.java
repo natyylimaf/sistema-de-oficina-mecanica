@@ -21,6 +21,9 @@ public class TelaEditarVeiculo extends JFrame {
     private JLabel labelMotivoEntrada;
     private JLabel labelDiagnostico;
     private JLabel labelStatus;
+    private JLabel labelMaoDeObra;
+    private JLabel labelValorPecas;
+    private JLabel labelOrcamento;
 
     private JTextField campoNomeMotorista;
     private JTextField campoCPF;
@@ -31,6 +34,9 @@ public class TelaEditarVeiculo extends JFrame {
     private JTextField campoAno;
     private JTextField campoQuantidadePortas;
     private JTextField campoCilindradas;
+    private JTextField campoMaoDeObra;
+    private JTextField campoValorPecas;
+    private JTextField campoOrcamento;
 
     private JSpinner campoDataChegada;
 
@@ -38,7 +44,9 @@ public class TelaEditarVeiculo extends JFrame {
     private JTextArea campoDiagnostico;
 
     private JComboBox<String> comboStatus;
+    
 
+    private JButton bGerarOrcamento;
     private JButton bSalvar;
     private JButton bCancelar;
 
@@ -151,6 +159,7 @@ public class TelaEditarVeiculo extends JFrame {
         campoAno.setBounds(530, 385, 350, 35);
         painel.add(campoAno);
         
+        
         // QUANTIDADE DE PORTAS
         labelQuantidadePortas = new JLabel("Quantidade de Portas:");
         labelQuantidadePortas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -236,21 +245,64 @@ public class TelaEditarVeiculo extends JFrame {
                         new String[]{
                             "PENDENTE",
                             "EM ANDAMENTO",
-                            "PRONTO"
+                            "PRONTO",
+                            "DESATIVADO"
                         }
                 )
         );
 
-        comboStatus.setBounds(150, 640, 200, 30);
+        comboStatus.setBounds(180, 640, 200, 30);
         painel.add(comboStatus);
 
+
+        // MÃO DE OBRA
+        labelMaoDeObra = new JLabel("Mão de Obra:");
+        labelMaoDeObra.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        labelMaoDeObra.setBounds(80, 740, 100, 25);
+        painel.add(labelMaoDeObra);
+
+        campoMaoDeObra = new JTextField();
+        campoMaoDeObra.setBounds(180, 740, 200, 30);
+        campoMaoDeObra.setEditable(false);
+        painel.add(campoMaoDeObra);
+        
+        
+        // VALOR DAS PEÇAS
+        labelValorPecas = new JLabel("Valos das Peças:");
+        labelValorPecas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        labelValorPecas.setBounds(80, 800, 100, 25);
+        painel.add(labelValorPecas);
+        
+        campoValorPecas = new JTextField();
+        campoValorPecas.setBounds(180, 800, 200, 30);
+        painel.add(campoValorPecas);
+        
+        
+        // ORÇAMENTO
+        labelOrcamento = new JLabel("Orçamento:");
+        labelOrcamento.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        labelOrcamento.setBounds(80, 860, 100, 25);
+        painel.add(labelOrcamento);
+        
+        campoOrcamento = new JTextField();
+        campoOrcamento.setBounds(180, 860, 200, 30);
+        campoOrcamento.setEditable(false);
+        painel.add(campoOrcamento);
+        
+        
+        // BOTÃO GERAR ORÇAMENTO
+        bGerarOrcamento = new JButton("Gerar Orçamento");
+        bGerarOrcamento.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        bGerarOrcamento.setBounds(80, 920, 170, 40);
+        painel.add(bGerarOrcamento);
+        
         
         // BOTÃO SALVAR ALTERAÇÕES
         bSalvar = new JButton("Salvar Alterações");
         bSalvar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
         bSalvar.setBackground(java.awt.Color.BLACK);
         bSalvar.setForeground(java.awt.Color.WHITE);
-        bSalvar.setBounds(540, 650, 180, 40);
+        bSalvar.setBounds(80, 1020, 190, 40);
         painel.add(bSalvar);
         
         
@@ -259,14 +311,44 @@ public class TelaEditarVeiculo extends JFrame {
         bCancelar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
         bCancelar.setBackground(java.awt.Color.WHITE);
         bCancelar.setForeground(java.awt.Color.BLACK);
-        bCancelar.setBounds(738, 650, 140, 40);
+        bCancelar.setBounds(278, 1020, 140, 40);
         painel.add(bCancelar);
+        
+        
+        // Escondendo campos que não devem aparecer inicialmente
+        labelQuantidadePortas.setVisible(false);
+        campoQuantidadePortas.setVisible(false);
+
+        labelCilindradas.setVisible(false);
+        campoCilindradas.setVisible(false);
 
         
-        
-        painel.setPreferredSize(new java.awt.Dimension(980, 1200));
+        // Define o tamanho preferido do painel
+        painel.setPreferredSize(new java.awt.Dimension(980, 1300));
     }
 
+    
+    // Método que configura a tela para exibir campos de CARRO
+    public void mostrarCamposCarro() {
+        labelQuantidadePortas.setVisible(true);
+        campoQuantidadePortas.setVisible(true);
+
+        labelCilindradas.setVisible(false);
+        campoCilindradas.setVisible(false);
+    }
+
+    // Método que configura a tela para exibir campos de MOTO
+    public void mostrarCamposMoto() {
+        labelQuantidadePortas.setVisible(false);
+        campoQuantidadePortas.setVisible(false);
+
+        labelCilindradas.setVisible(true);
+        campoCilindradas.setVisible(true);
+    }
+    
+    
+    
+    
     public static void main(String[] args) {
         new TelaEditarVeiculo();
     }

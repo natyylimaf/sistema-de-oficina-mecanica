@@ -1,6 +1,8 @@
 package view;
 
 import dao.VeiculoDAO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.util.List;
 
@@ -136,12 +138,37 @@ public class TelaBuscarVeiculos extends JFrame {
         modeloTabela.addColumn("Cliente");
         modeloTabela.addColumn("Status");
 
+        // Criando da JTable usando o modelo de dados
         tabelaVeiculos = new JTable(modeloTabela) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+        
+        // Adiciona um listener de mouse para detectar cliques na tabela
+        tabelaVeiculos.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int linha = tabelaVeiculos.getSelectedRow();
+                    int idVeiculo = Integer.parseInt(tabelaVeiculos.getValueAt(linha, 0).toString());
+
+                    String tipo = tabelaVeiculos
+                            .getValueAt(linha, 1)
+                            .toString();
+
+                    TelaEditarVeiculo tela = new TelaEditarVeiculo();
+
+                    if (tipo.equals("CARRO")) {
+                        tela.mostrarCamposCarro();
+                    } else {
+                        tela.mostrarCamposMoto();
+                    }
+                }
+            }
+        });
 
         scrollTabela = new JScrollPane(tabelaVeiculos);
         scrollTabela.setBounds(80, 200, 810, 350);
@@ -189,12 +216,18 @@ public class TelaBuscarVeiculos extends JFrame {
         }
     }
     
-    public static void main(String[] args) {
-        new TelaBuscarVeiculos();
-    }
     private void bVoltarActionPerformed(java.awt.event.ActionEvent evt){
         TelaMenu tela = new TelaMenu();
         tela.setVisible(true);
         dispose();
+    }
+    
+    
+    
+    
+    
+    
+    public static void main(String[] args) {
+        new TelaBuscarVeiculos();
     }
 }

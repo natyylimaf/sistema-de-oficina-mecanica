@@ -25,7 +25,6 @@ public class TelaCadastrarCarro extends JFrame {
     private JLabel labelQuantidadePortas;
     private JLabel labelDataChegada;
     private JLabel labelMotivoEntrada;
-    private JLabel labelDiagnostico;
     private JLabel labelStatus;
 
     private JTextField campoNomeMotorista;
@@ -36,13 +35,11 @@ public class TelaCadastrarCarro extends JFrame {
     private JTextField campoCor;
     private JTextField campoAno;
     private JTextField campoQuantidadePortas;
+    private JTextField campoStatus;
 
     private JSpinner campoDataChegada;
 
     private JTextArea campoMotivoEntrada;
-    private JTextArea campoDiagnostico;
-
-    private JComboBox<String> comboStatus;
 
     private JButton bSalvar;
     private JButton bCancelar;
@@ -201,51 +198,23 @@ public class TelaCadastrarCarro extends JFrame {
         painel.add(scrollMotivoEntrada);
 
         
-        // DIAGNÓSTICO
-        labelDiagnostico = new JLabel("Diagnóstico:");
-        labelDiagnostico.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
-        labelDiagnostico.setBounds(530, 535, 120, 25);
-        painel.add(labelDiagnostico);
-
-        campoDiagnostico = new JTextArea();
-
-        JScrollPane scrollDiagnostico = new JScrollPane(campoDiagnostico);
-        scrollDiagnostico.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollDiagnostico.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        campoDiagnostico.setLineWrap(true);
-        campoDiagnostico.setWrapStyleWord(true);
-        scrollDiagnostico.setBounds(530, 565, 350, 60);
-        painel.add(scrollDiagnostico);
-
-        
         // STATUS
         labelStatus = new JLabel("Status:");
         labelStatus.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
-        labelStatus.setBounds(80, 640, 100, 25);
+        labelStatus.setBounds(530, 535, 100, 25);
         painel.add(labelStatus);
 
-        comboStatus = new JComboBox<>();
-        comboStatus.setModel(
-                new DefaultComboBoxModel<>(
-                        new String[]{
-                            "PENDENTE",
-                            "EM ANDAMENTO",
-                            "PRONTO"
-                        }
-                )
-        );
-
-        comboStatus.setBounds(150, 640, 200, 30);
-        painel.add(comboStatus);
-
+        campoStatus = new JTextField("PENDENTE");
+        campoStatus.setBounds(530, 565, 350, 35);
+        campoStatus.setEditable(false);
+        painel.add(campoStatus);
         
         // BOTÃO SALVAR
         bSalvar = new JButton("Salvar");
         bSalvar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
         bSalvar.setBackground(java.awt.Color.BLACK);
         bSalvar.setForeground(java.awt.Color.WHITE);
-        bSalvar.setBounds(580, 650, 140, 40);
+        bSalvar.setBounds(80, 650, 140, 40);
         bSalvar.addActionListener(this::bSalvarActionPerformed);
         painel.add(bSalvar);
 
@@ -255,7 +224,7 @@ public class TelaCadastrarCarro extends JFrame {
         bCancelar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
         bCancelar.setBackground(java.awt.Color.WHITE);
         bCancelar.setForeground(java.awt.Color.BLACK);
-        bCancelar.setBounds(738, 650, 140, 40);
+        bCancelar.setBounds(240, 650, 140, 40);
         bCancelar.addActionListener(this::bCancelarActionPerformed);
         painel.add(bCancelar);
 
@@ -265,7 +234,7 @@ public class TelaCadastrarCarro extends JFrame {
     
     // Método executado quando o botão "Salvar" é clicado
     private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {
-        String nomeMotorista, cpf, celular, modelo, placa, cor, motivo, diagnostico, status;
+        String nomeMotorista, cpf, celular, modelo, placa, cor, motivo;
         int portas, ano;
         Date dataAntiga;
         LocalDate data;
@@ -294,8 +263,6 @@ public class TelaCadastrarCarro extends JFrame {
             
             // Obtém os textos dos campos de descrição
             motivo = campoMotivoEntrada.getText();
-            diagnostico = campoDiagnostico.getText();
-            status = (String) comboStatus.getSelectedItem();
 
             // Cria um objeto Carro com os dados informados
             Carro novoCarro = new Carro(
@@ -308,8 +275,8 @@ public class TelaCadastrarCarro extends JFrame {
                     ano,
                     data,
                     motivo,
-                    diagnostico,
-                    status,
+                    "",
+                    "PENDENTE",
                     portas
             );
 

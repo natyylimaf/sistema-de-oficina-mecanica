@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDate;
 
 public abstract class Veiculo {
-
     private int idVeiculo;
 
     private String nomeMotorista;
@@ -58,118 +57,50 @@ public abstract class Veiculo {
         this.registroAtivo = true;
     }
 
-    public int getIdVeiculo() {
-        return idVeiculo;
-    }
+    
+    public int getIdVeiculo() { return idVeiculo; }
+    public void setIdVeiculo(int idVeiculo) { this.idVeiculo = idVeiculo; }
 
-    public void setIdVeiculo(int idVeiculo) {
-        this.idVeiculo = idVeiculo;
-    }
+    public String getNomeMotorista() { return nomeMotorista; }
+    public void setNomeMotorista(String nomeMotorista) { this.nomeMotorista = nomeMotorista; }
 
-    public String getNomeMotorista() {
-        return nomeMotorista;
-    }
+    public String getCpfMotorista() { return cpfMotorista; }
+    public void setCpfMotorista(String cpfMotorista) { this.cpfMotorista = cpfMotorista; }
 
-    public void setNomeMotorista(String nomeMotorista) {
-        this.nomeMotorista = nomeMotorista;
-    }
+    public String getTelefoneMotorista() { return telefoneMotorista; }
+    public void setTelefoneMotorista(String telefoneMotorista) { this.telefoneMotorista = telefoneMotorista; }
 
-    public String getCpfMotorista() {
-        return cpfMotorista;
-    }
+    public String getModelo() { return modelo; }
+    public void setModelo(String modelo) { this.modelo = modelo; }
 
-    public void setCpfMotorista(String cpfMotorista) {
-        this.cpfMotorista = cpfMotorista;
-    }
+    public String getPlaca() { return placa; }
+    public void setPlaca(String placa) { this.placa = placa; }
 
-    public String getTelefoneMotorista() {
-        return telefoneMotorista;
-    }
+    public String getCor() { return cor; }
+    public void setCor(String cor) { this.cor = cor; }
 
-    public void setTelefoneMotorista(String telefoneMotorista) {
-        this.telefoneMotorista = telefoneMotorista;
-    }
+    public int getAno() { return ano; }
+    public void setAno(int ano) { this.ano = ano; }
 
-    public String getModelo() {
-        return modelo;
-    }
+    public LocalDate getDataChegada() { return dataChegada; }
+    public void setDataChegada(LocalDate dataChegada) { this.dataChegada = dataChegada; }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
+    public String getMotivo() { return motivo; }
+    public void setMotivo(String motivo) { this.motivo = motivo; }
 
-    public String getPlaca() {
-        return placa;
-    }
+    public String getDiagnostico() { return diagnostico; }
+    public void setDiagnostico(String diagnostico) { this.diagnostico = diagnostico; }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
+    public String getTipoVeiculo() { return tipoVeiculo; }
+    public void setTipoVeiculo(String tipoVeiculo) { this.tipoVeiculo = tipoVeiculo; }
 
-    public String getCor() {
-        return cor;
-    }
+    public String getStatusCadastro() { return statusCadastro; }
+    public void setStatusCadastro(String statusCadastro) { this.statusCadastro = statusCadastro; }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
+    public boolean isRegistroAtivo() { return registroAtivo; }
+    public void setRegistroAtivo(boolean registroAtivo) { this.registroAtivo = registroAtivo; }
 
-    public int getAno() {
-        return ano;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-
-    public LocalDate getDataChegada() {
-        return dataChegada;
-    }
-
-    public void setDataChegada(LocalDate dataChegada) {
-        this.dataChegada = dataChegada;
-    }
-
-    public String getMotivo() {
-        return motivo;
-    }
-
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    public String getDiagnostico() {
-        return diagnostico;
-    }
-
-    public void setDiagnostico(String diagnostico) {
-        this.diagnostico = diagnostico;
-    }
-
-    public String getTipoVeiculo() {
-        return tipoVeiculo;
-    }
-
-    public void setTipoVeiculo(String tipoVeiculo) {
-        this.tipoVeiculo = tipoVeiculo;
-    }
-
-    public String getStatusCadastro() {
-        return statusCadastro;
-    }
-
-    public void setStatusCadastro(String statusCadastro) {
-        this.statusCadastro = statusCadastro;
-    }
-
-    public boolean isRegistroAtivo() {
-        return registroAtivo;
-    }
-
-    public void setRegistroAtivo(boolean registroAtivo) {
-        this.registroAtivo = registroAtivo;
-    }
-
-    public abstract double gerarOrcamento();
+    
+    public abstract double gerarOrcamento(double valorPecas);
 
 }
