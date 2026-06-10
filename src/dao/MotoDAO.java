@@ -11,8 +11,65 @@ public class MotoDAO {
     public MotoDAO(Connection conn) {
         this.conn = conn;
     }
+   private void validarMoto(Moto moto) {
 
-    // Método responsável por salvar uma moto no banco de dados
+
+// Verifica se o objeto moto foi informado
+if (moto == null) {
+    throw new IllegalArgumentException(
+            "Dados da moto inválidos.");
+}
+
+// Validação do CPF
+// Aceita apenas o formato 000.000.000-00
+String cpf = moto.getCpfMotorista();
+
+if (cpf == null ||
+    !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+
+    throw new IllegalArgumentException(
+            "CPF deve estar no formato 000.000.000-00");
+}
+
+// Validação do telefone
+// Aceita apenas o formato (XX) XXXXX-XXXX
+String telefone = moto.getTelefoneMotorista();
+
+if (telefone == null ||
+    !telefone.matches("\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
+
+    throw new IllegalArgumentException(
+"Telefone deve estar no formato (XX)XXXXX-XXXX");
+}
+
+// Verifica se a placa foi informada
+String placa = moto.getPlaca();
+
+if (placa == null ||
+    placa.trim().isEmpty()) {
+
+    throw new IllegalArgumentException(
+            "Placa obrigatória.");
+}
+
+// Verifica se a data de chegada foi informada
+if (moto.getDataChegada() == null) {
+
+    throw new IllegalArgumentException(
+            "Data de chegada obrigatória.");
+}
+
+// Verifica se a cilindrada é válida
+if (moto.getCilindradas() <= 0) {
+
+    throw new IllegalArgumentException(
+            "Cilindrada inválida.");
+}
+
+
+}
+
+        // Método responsável por salvar uma moto no banco de dados
     public void salvar(Moto moto) {
 
         // Verifica se a conexão foi criada corretamente
@@ -20,7 +77,7 @@ public class MotoDAO {
             System.out.println("Erro: conexão com banco é nula.");
             return;
         }
-
+        validarMoto(moto);
         // SQL para inserir os dados gerais do veículo
         String sqlVeiculo =
                 "INSERT INTO veiculos " +
