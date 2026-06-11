@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import dao.VeiculoDAO;
 
 public class TelaEditarVeiculo extends JFrame {
     // Declaração das variáveis
@@ -49,10 +50,16 @@ public class TelaEditarVeiculo extends JFrame {
     private JButton bGerarOrcamento;
     private JButton bSalvar;
     private JButton bCancelar;
+    
+    private int idVeiculo;
 
     
-    public TelaEditarVeiculo() {
+    public TelaEditarVeiculo(int idVeiculo) {
+        this.idVeiculo = idVeiculo;
+        
         initComponents();
+        
+        carregarDadosVeiculo();
 
         setSize(1000, 700);
         setLocationRelativeTo(null);
@@ -60,7 +67,7 @@ public class TelaEditarVeiculo extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         getContentPane().setBackground(java.awt.Color.WHITE);
-
+        
         setVisible(true);
     }
 
@@ -303,6 +310,7 @@ public class TelaEditarVeiculo extends JFrame {
         bSalvar.setBackground(java.awt.Color.BLACK);
         bSalvar.setForeground(java.awt.Color.WHITE);
         bSalvar.setBounds(80, 1020, 190, 40);
+        bSalvar.addActionListener(e -> salvarAlteracoes());
         painel.add(bSalvar);
         
         
@@ -312,6 +320,7 @@ public class TelaEditarVeiculo extends JFrame {
         bCancelar.setBackground(java.awt.Color.WHITE);
         bCancelar.setForeground(java.awt.Color.BLACK);
         bCancelar.setBounds(278, 1020, 140, 40);
+        bCancelar.addActionListener(e -> cancelar());
         painel.add(bCancelar);
         
         
@@ -347,9 +356,103 @@ public class TelaEditarVeiculo extends JFrame {
     }
     
     
+    private void carregarDadosVeiculo() {
+        VeiculoDAO dao = new VeiculoDAO();
+        Object[] dados = dao.buscarPorId(idVeiculo);
+
+        if (dados == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Veículo não encontrado!"
+            );
+            return;
+        }
+
+        campoNomeMotorista.setText(dados[1].toString());
+        campoCPF.setText(dados[2].toString());
+        campoTelefone.setText(dados[3].toString());
+        campoModelo.setText(dados[4].toString());
+        campoPlaca.setText(dados[5].toString());
+        campoCor.setText(dados[6].toString());
+        campoAno.setText(dados[7].toString());
+
+        campoMotivoEntrada.setText(
+                dados[9] == null ? "" : dados[9].toString()
+        );
+
+        campoDiagnostico.setText(
+                dados[10] == null ? "" : dados[10].toString()
+        );
+
+        if (dados[12] != null) {
+            comboStatus.setSelectedItem(
+                    dados[12].toString()
+            );
+        }
+
+        String tipo = dados[11].toString();
+
+        if (tipo.equals("CARRO")) {
+
+            mostrarCamposCarro();
+
+            if (dados[13] != null) {
+                campoQuantidadePortas.setText(
+                        dados[13].toString()
+                );
+            }
+
+        } else {
+
+            mostrarCamposMoto();
+
+            if (dados[14] != null) {
+                campoCilindradas.setText(
+                        dados[14].toString()
+                );
+            }
+        }
+    }
     
     
-    public static void main(String[] args) {
-        new TelaEditarVeiculo();
+    
+    private void salvarAlteracoes() {
+        VeiculoDAO dao = new VeiculoDAO();
+
+        boolean sucesso = dao.atualizarVeiculo(
+                idVeiculo,
+                campoNomeMotorista.getText(),
+                campoCPF.getText(),
+                campoTelefone.getText(),
+                campoModelo.getText(),
+                campoPlaca.getText(),
+                campoCor.getText(),
+                Integer.parseInt(campoAno.getText()),
+                campoMotivoEntrada.getText(),
+                campoDiagnostico.getText(),
+                comboStatus.getSelectedItem().toString()
+        );
+
+        if (sucesso) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Veículo atualizado com sucesso!"
+            );
+
+        } else {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao atualizar veículo!"
+            );
+        }
+    }
+    
+    
+    private void cancelar() {
+        TelaBuscarVeiculos tela = new TelaBuscarVeiculos();
+        tela.setVisible(true);
+        dispose();
     }
 }

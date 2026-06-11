@@ -181,4 +181,107 @@ public class VeiculoDAO {
 
         return lista;
     }
+    
+    
+    public Object[] buscarPorId(int idVeiculo) {
+
+        String sql
+                = "SELECT v.*, c.quantidade_portas, m.cilindradas "
+                + "FROM veiculos v "
+                + "LEFT JOIN carros c ON v.id_veiculo = c.id_veiculo "
+                + "LEFT JOIN motos m ON v.id_veiculo = m.id_veiculo "
+                + "WHERE v.id_veiculo = ?";
+
+        try (
+                Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idVeiculo);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                return new Object[]{
+                    rs.getInt("id_veiculo"),
+                    rs.getString("nome_motorista"),
+                    rs.getString("cpf_motorista"),
+                    rs.getString("telefone_motorista"),
+                    rs.getString("modelo"),
+                    rs.getString("placa"),
+                    rs.getString("cor"),
+                    rs.getInt("ano"),
+                    rs.getDate("data_chegada"),
+                    rs.getString("motivo"),
+                    rs.getString("diagnostico"),
+                    rs.getString("tipo_veiculo"),
+                    rs.getString("status_cadastro"),
+                    rs.getObject("quantidade_portas"),
+                    rs.getObject("cilindradas")
+                };
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        return null;
+    }
+    
+    
+    
+    public boolean atualizarVeiculo(
+            int idVeiculo,
+            String nomeMotorista,
+            String cpf,
+            String telefone,
+            String modelo,
+            String placa,
+            String cor,
+            int ano,
+            String motivo,
+            String diagnostico,
+            String status
+    ) {
+
+        String sql
+                = "UPDATE veiculos SET "
+                + "nome_motorista=?, "
+                + "cpf_motorista=?, "
+                + "telefone_motorista=?, "
+                + "modelo=?, "
+                + "placa=?, "
+                + "cor=?, "
+                + "ano=?, "
+                + "motivo=?, "
+                + "diagnostico=?, "
+                + "status_cadastro=? "
+                + "WHERE id_veiculo=?";
+
+        try (
+                Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeMotorista);
+            stmt.setString(2, cpf);
+            stmt.setString(3, telefone);
+            stmt.setString(4, modelo);
+            stmt.setString(5, placa);
+            stmt.setString(6, cor);
+            stmt.setInt(7, ano);
+            stmt.setString(8, motivo);
+            stmt.setString(9, diagnostico);
+            stmt.setString(10, status);
+            stmt.setInt(11, idVeiculo);
+
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 }

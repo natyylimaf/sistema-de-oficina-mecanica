@@ -159,7 +159,7 @@ public class TelaBuscarVeiculos extends JFrame {
                             .getValueAt(linha, 1)
                             .toString();
 
-                    TelaEditarVeiculo tela = new TelaEditarVeiculo();
+                    TelaEditarVeiculo tela = new TelaEditarVeiculo(idVeiculo);
 
                     if (tipo.equals("CARRO")) {
                         tela.mostrarCamposCarro();

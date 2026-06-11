@@ -23,7 +23,7 @@ public class CarroDAO {
         }
         
         
-         // Validação do CPF
+    // Validação do CPF
     String cpf = carro.getCpfMotorista();
 
     if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
@@ -31,7 +31,9 @@ public class CarroDAO {
         throw new IllegalArgumentException(
                 "CPF deve estar no formato 000.000.000-00");
     }
-         // Validação do telefone
+    
+    
+    // Validação do telefone
     String telefone = carro.getTelefoneMotorista();
 
     if (!telefone.matches("\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
@@ -97,66 +99,29 @@ public class CarroDAO {
             ) {
 
                 // Preenche os parâmetros da query
-                stmtVeiculo.setString(
-                        1,
-                        carro.getNomeMotorista());
+                stmtVeiculo.setString(1, carro.getNomeMotorista());
+                stmtVeiculo.setString(2, carro.getCpfMotorista());
+                stmtVeiculo.setString(3, carro.getTelefoneMotorista());
+                stmtVeiculo.setString(4, carro.getModelo());
+                stmtVeiculo.setString(5, carro.getPlaca());
+                stmtVeiculo.setString(6, carro.getCor());
+                stmtVeiculo.setInt(7, carro.getAno());
+                
+                LocalDate data = carro.getDataChegada();
+                stmtVeiculo.setDate(8, Date.valueOf(data));
 
-                stmtVeiculo.setString(
-                        2,
-                        carro.getCpfMotorista());
-
-                stmtVeiculo.setString(
-                        3,
-                        carro.getTelefoneMotorista());
-
-                stmtVeiculo.setString(
-                        4,
-                        carro.getModelo());
-
-                stmtVeiculo.setString(
-                        5,
-                        carro.getPlaca());
-
-                stmtVeiculo.setString(
-                        6,
-                        carro.getCor());
-
-                stmtVeiculo.setInt(
-                        7,
-                        carro.getAno());
-
-                LocalDate data =
-                        carro.getDataChegada();
-
-                stmtVeiculo.setDate(
-                        8,
-                        Date.valueOf(data));
-
-                stmtVeiculo.setString(
-                        9,
-                        carro.getMotivo());
-
-                stmtVeiculo.setString(
-                        10,
-                        carro.getDiagnostico());
-
-                stmtVeiculo.setString(
-                        11,
-                        "CARRO");
-
-                stmtVeiculo.setString(
-                        12,
-                        carro.getStatusCadastro());
+                stmtVeiculo.setString(9, carro.getMotivo());
+                stmtVeiculo.setString(10, carro.getDiagnostico());
+                stmtVeiculo.setString(11, "CARRO");
+                stmtVeiculo.setString(12, carro.getStatusCadastro());
 
                 // Executa o INSERT
                 stmtVeiculo.executeUpdate();
 
                 // Recupera o ID gerado automaticamente
                 try (
-                        ResultSet rs =
-                        stmtVeiculo.getGeneratedKeys()
+                        ResultSet rs = stmtVeiculo.getGeneratedKeys()
                 ) {
-
                     if (rs.next()) {
                         idVeiculo = rs.getInt(1);
                     }
@@ -165,17 +130,11 @@ public class CarroDAO {
 
             // Prepara o INSERT da tabela carros
             try (
-                    PreparedStatement stmtCarro =
-                    conn.prepareStatement(sqlCarro)
+                    PreparedStatement stmtCarro = conn.prepareStatement(sqlCarro)
             ) {
 
-                stmtCarro.setInt(
-                        1,
-                        idVeiculo);
-
-                stmtCarro.setInt(
-                        2,
-                        carro.getQuantidadePortas());
+                stmtCarro.setInt(1, idVeiculo);
+                stmtCarro.setInt(2, carro.getQuantidadePortas());
 
                 // Executa o INSERT
                 stmtCarro.executeUpdate();

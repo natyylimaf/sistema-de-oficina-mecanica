@@ -11,65 +11,64 @@ public class MotoDAO {
     public MotoDAO(Connection conn) {
         this.conn = conn;
     }
-   private void validarMoto(Moto moto) {
+    
+    
+    private void validarMoto(Moto moto) {
 
+        // Verifica se o objeto moto foi informado
+        if (moto == null) {
+            throw new IllegalArgumentException(
+                    "Dados da moto inválidos.");
+        }
 
-// Verifica se o objeto moto foi informado
-if (moto == null) {
-    throw new IllegalArgumentException(
-            "Dados da moto inválidos.");
-}
+        // Validação do CPF
+        // Aceita apenas o formato 000.000.000-00
+        String cpf = moto.getCpfMotorista();
 
-// Validação do CPF
-// Aceita apenas o formato 000.000.000-00
-String cpf = moto.getCpfMotorista();
+        if (cpf == null
+                || !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
 
-if (cpf == null ||
-    !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+            throw new IllegalArgumentException(
+                    "CPF deve estar no formato 000.000.000-00");
+        }
 
-    throw new IllegalArgumentException(
-            "CPF deve estar no formato 000.000.000-00");
-}
+        // Validação do telefone
+        // Aceita apenas o formato (XX)XXXXX-XXXX
+        String telefone = moto.getTelefoneMotorista();
 
-// Validação do telefone
-// Aceita apenas o formato (XX) XXXXX-XXXX
-String telefone = moto.getTelefoneMotorista();
+        if (telefone == null
+                || !telefone.matches("\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
 
-if (telefone == null ||
-    !telefone.matches("\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
+            throw new IllegalArgumentException(
+                    "Telefone deve estar no formato (XX)XXXXX-XXXX");
+        }
 
-    throw new IllegalArgumentException(
-"Telefone deve estar no formato (XX)XXXXX-XXXX");
-}
+        // Verifica se a placa foi informada
+        String placa = moto.getPlaca();
 
-// Verifica se a placa foi informada
-String placa = moto.getPlaca();
+        if (placa == null
+                || placa.trim().isEmpty()) {
 
-if (placa == null ||
-    placa.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Placa obrigatória.");
+        }
 
-    throw new IllegalArgumentException(
-            "Placa obrigatória.");
-}
+        // Verifica se a data de chegada foi informada
+        if (moto.getDataChegada() == null) {
 
-// Verifica se a data de chegada foi informada
-if (moto.getDataChegada() == null) {
+            throw new IllegalArgumentException(
+                    "Data de chegada obrigatória.");
+        }
 
-    throw new IllegalArgumentException(
-            "Data de chegada obrigatória.");
-}
+        // Verifica se a cilindrada é válida
+        if (moto.getCilindradas() <= 0) {
 
-// Verifica se a cilindrada é válida
-if (moto.getCilindradas() <= 0) {
+            throw new IllegalArgumentException(
+                    "Cilindrada inválida.");
+        }
+    }
 
-    throw new IllegalArgumentException(
-            "Cilindrada inválida.");
-}
-
-
-}
-
-        // Método responsável por salvar uma moto no banco de dados
+    // Método responsável por salvar uma moto no banco de dados
     public void salvar(Moto moto) {
 
         // Verifica se a conexão foi criada corretamente
