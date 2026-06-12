@@ -25,25 +25,39 @@ public class MotoDAO {
         // Aceita apenas o formato 000.000.000-00
         String cpf = moto.getCpfMotorista();
 
-        if (cpf == null
-                || !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+       if (cpf == null ||
+    !cpf.matches("(\\d{11})|(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})")) {
 
-            throw new IllegalArgumentException(
-                    "CPF deve estar no formato 000.000.000-00");
-        }
+    throw new IllegalArgumentException(
+            "CPF inválido.");
+}
 
         // Validação do telefone
-        // Aceita apenas o formato (XX)XXXXX-XXXX
         String telefone = moto.getTelefoneMotorista();
 
-        if (telefone == null
-                || !telefone.matches("\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
+if (telefone == null) {
 
-            throw new IllegalArgumentException(
-                    "Telefone deve estar no formato (XX)XXXXX-XXXX");
-        }
+    throw new IllegalArgumentException(
+            "Telefone inválido.");
+}
 
-        // Verifica se a placa foi informada
+// Remove caracteres de formatação
+telefone = telefone.replace("(", "")
+                   .replace(")", "")
+                   .replace("-", "")
+                   .replace(" ", "");
+
+// Verifica se possui apenas números
+if (!telefone.matches("\\d{10,11}")) {
+
+    throw new IllegalArgumentException(
+            "Telefone inválido.");
+}
+        
+
+// Verifica se a placa foi informada
+        
+        
         String placa = moto.getPlaca();
 
         if (placa == null
