@@ -168,6 +168,8 @@ public class TelaBuscarVeiculos extends JFrame {
                     } else {
                         tela.mostrarCamposMoto();
                     }
+                    
+                    dispose();
                 }
             }
         });

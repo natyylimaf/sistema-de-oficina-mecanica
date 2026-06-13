@@ -231,6 +231,79 @@ public class VeiculoDAO {
     }
     
     
+    // Busca o orçamento existente de um veículo (retorna null se não houver)
+    public Object[] buscarOrcamento(int idVeiculo) {
+        String sql = "SELECT mao_obra, valor_pecas, valor_total "
+                   + "FROM orcamentoVeiculo WHERE id_veiculo = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idVeiculo);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Object[]{
+                    rs.getDouble("mao_obra"),
+                    rs.getDouble("valor_pecas"),
+                    rs.getDouble("valor_total")
+                };
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar orçamento: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+
+    // Salva ou atualiza o orçamento (se já existir um para esse veículo, atualiza; senão, insere)
+    public boolean salvarOrcamento(int idVeiculo, double maoObra, double valorPecas, double valorTotal) {
+        // Verifica se já existe um orçamento para esse veículo
+        String sqlVerifica = "SELECT id_orcamento FROM orcamentoVeiculo WHERE id_veiculo = ?";
+        String sqlInsert   = "INSERT INTO orcamentoVeiculo (mao_obra, valor_pecas, valor_total, id_veiculo) "
+                           + "VALUES (?, ?, ?, ?)";
+        String sqlUpdate   = "UPDATE orcamentoVeiculo SET mao_obra=?, valor_pecas=?, valor_total=? "
+                           + "WHERE id_veiculo=?";
+
+        try (Connection conn = Conexao.conectar()) {
+
+            boolean jaExiste = false;
+
+            try (PreparedStatement stmtVerifica = conn.prepareStatement(sqlVerifica)) {
+                stmtVerifica.setInt(1, idVeiculo);
+                ResultSet rs = stmtVerifica.executeQuery();
+                jaExiste = rs.next();
+            }
+
+            if (jaExiste) {
+                try (PreparedStatement stmt = conn.prepareStatement(sqlUpdate)) {
+                    stmt.setDouble(1, maoObra);
+                    stmt.setDouble(2, valorPecas);
+                    stmt.setDouble(3, valorTotal);
+                    stmt.setInt(4, idVeiculo);
+                    stmt.executeUpdate();
+                }
+            } else {
+                try (PreparedStatement stmt = conn.prepareStatement(sqlInsert)) {
+                    stmt.setDouble(1, maoObra);
+                    stmt.setDouble(2, valorPecas);
+                    stmt.setDouble(3, valorTotal);
+                    stmt.setInt(4, idVeiculo);
+                    stmt.executeUpdate();
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar orçamento: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    
     
     // Método responsável por atualizar os dados de um veículo
     public boolean atualizarVeiculo(

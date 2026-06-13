@@ -32,7 +32,7 @@ public class CarroDAO {
                 + "(id_veiculo, quantidade_portas) "
                 + "VALUES (?, ?)";
 
-        // Validações — executadas ANTES de qualquer coisa com o banco
+        // Validações
         ValidacaoVeiculo.validarNome(carro.getNomeMotorista());
         ValidacaoVeiculo.validarCpf(carro.getCpfMotorista());
         ValidacaoVeiculo.validarTelefone(carro.getTelefoneMotorista());

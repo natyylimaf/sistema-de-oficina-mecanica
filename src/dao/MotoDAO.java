@@ -31,7 +31,7 @@ public class MotoDAO {
         String sqlMoto =
                 "INSERT INTO motos (id_veiculo, cilindradas) VALUES (?, ?)";
 
-        // Validações — executadas ANTES de qualquer coisa com o banco
+        // Validações
         ValidacaoVeiculo.validarNome(moto.getNomeMotorista());
         ValidacaoVeiculo.validarCpf(moto.getCpfMotorista());
         ValidacaoVeiculo.validarTelefone(moto.getTelefoneMotorista());

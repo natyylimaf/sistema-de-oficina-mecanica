@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import dao.VeiculoDAO;
+import model.Carro;
+import model.Moto;
 
 public class TelaEditarVeiculo extends JFrame {
     // Declaração das variáveis
@@ -287,6 +289,7 @@ public class TelaEditarVeiculo extends JFrame {
         bGerarOrcamento = new JButton("Gerar Orçamento");
         bGerarOrcamento.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
         bGerarOrcamento.setBounds(80, 920, 170, 40);
+        bGerarOrcamento.addActionListener(e -> gerarOrcamento());
         painel.add(bGerarOrcamento);
         
         // BOTÃO SALVAR ALTERAÇÕES
@@ -366,6 +369,18 @@ public class TelaEditarVeiculo extends JFrame {
 
             String tipo = dados[11].toString();
             this.tipoVeiculo = tipo;
+            
+            if (tipo.equals("CARRO")) {
+                campoMaoDeObra.setText(String.format("%.2f", Carro.getMaoDeObra()));
+            } else {
+                campoMaoDeObra.setText(String.format("%.2f", Moto.getMaoDeObra()));
+            }
+            
+            Object[] orcamento = dao.buscarOrcamento(idVeiculo);
+            if (orcamento != null) {
+                campoValorPecas.setText(String.format("%.2f", (double) orcamento[1]));
+                campoOrcamento.setText(String.format("%.2f", (double) orcamento[2]));
+            }
 
             if (tipo.equals("CARRO")) {
                 mostrarCamposCarro();
@@ -446,6 +461,21 @@ public class TelaEditarVeiculo extends JFrame {
                     quantidadePortas,
                     cilindradas
             );
+            
+            String valorPecasTexto = campoValorPecas.getText().trim();
+            String orcamentoTexto  = campoOrcamento.getText().trim();
+
+            if (!valorPecasTexto.isEmpty() && !orcamentoTexto.isEmpty()) {
+                try {
+                    double maoDeObra   = "CARRO".equals(tipoVeiculo) ? Carro.getMaoDeObra() : Moto.getMaoDeObra();
+                    double valorPecas  = Double.parseDouble(valorPecasTexto.replace(",", "."));
+                    double valorTotal  = Double.parseDouble(orcamentoTexto.replace(",", "."));
+
+                    dao.salvarOrcamento(idVeiculo, maoDeObra, valorPecas, valorTotal);
+                } catch (NumberFormatException ex) {
+                    // Orçamento não preenchido corretamente, ignora silenciosamente
+                }
+            }
 
             JOptionPane.showMessageDialog(this, "Veículo atualizado com sucesso!");
 
@@ -453,6 +483,56 @@ public class TelaEditarVeiculo extends JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de validação", JOptionPane.WARNING_MESSAGE);
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(this, "Erro ao atualizar veículo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
+    private void gerarOrcamento() {
+        try {
+            String valorPecasTexto = campoValorPecas.getText().trim();
+
+            if (valorPecasTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Informe o valor das peças para gerar o orçamento.",
+                    "Campo obrigatório",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            // Aceita tanto vírgula quanto ponto como separador decimal
+            valorPecasTexto = valorPecasTexto.replace(",", ".");
+            double valorPecas = Double.parseDouble(valorPecasTexto);
+
+            if (valorPecas < 0) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "O valor das peças não pode ser negativo.",
+                    "Valor inválido",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            double maoDeObra;
+            if ("CARRO".equals(tipoVeiculo)) {
+                maoDeObra = Carro.getMaoDeObra();
+            } else {
+                maoDeObra = Moto.getMaoDeObra();
+            }
+
+            double orcamento = maoDeObra + valorPecas;
+
+            campoOrcamento.setText(String.format("%.2f", orcamento));
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Valor das peças inválido. Use apenas números (ex: 150.00 ou 150,00).",
+                "Erro de validação",
+                JOptionPane.WARNING_MESSAGE
+            );
         }
     }
     

@@ -73,7 +73,7 @@ CREATE TABLE orcamentoVeiculo(
     valor_pecas DECIMAL(10,2) DEFAULT 0.00,
     valor_total DECIMAL(10,2) DEFAULT 0.00,
 
-    id_veiculo INT NOT NULL,
+    id_veiculo INT NOT NULL UNIQUE,
 
     FOREIGN KEY(id_veiculo)
     REFERENCES veiculos(id_veiculo)
