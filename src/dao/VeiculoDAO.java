@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import util.ValidacaoVeiculo;
 
 public class VeiculoDAO {
 
     // Método responsável por salvar um veículo no banco de dados
     public boolean salvar(
-
             String nomeMotorista,
             String cpfMotorista,
             String telefoneMotorista,
@@ -70,9 +70,7 @@ public class VeiculoDAO {
 
         } catch (Exception e) {
 
-            System.out.println(
-                    "Erro ao salvar veículo: "
-                    + e.getMessage()
+            System.out.println("Erro ao salvar veículo: " + e.getMessage()
             );
 
             return false;
@@ -87,17 +85,17 @@ public class VeiculoDAO {
             String status
     ) {
         // Evita NullPointerException
-if (pesquisa == null) {
-    pesquisa = "";
-}
+        if (pesquisa == null) {
+            pesquisa = "";
+        }
 
-if (tipo == null) {
-    tipo = "Todos";
-}
+        if (tipo == null) {
+            tipo = "Todos";
+        }
 
-if (status == null) {
-    status = "Todos";
-}
+        if (status == null) {
+            status = "Todos";
+        }
 
         List<Object[]> lista = new ArrayList<>();
 
@@ -142,8 +140,7 @@ if (status == null) {
 
         try (
                 Connection conn = Conexao.conectar();
-                PreparedStatement stmt =
-                        conn.prepareStatement(sql.toString())
+                PreparedStatement stmt = conn.prepareStatement(sql.toString())
         ) {
 
             int indice = 1;
@@ -172,7 +169,6 @@ if (status == null) {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-
                 lista.add(new Object[]{
                     rs.getInt("id_veiculo"),
                     rs.getString("tipo_veiculo"),
@@ -184,11 +180,7 @@ if (status == null) {
             }
 
         } catch (Exception e) {
-
-            System.out.println(
-                    "Erro ao buscar veículos: "
-                    + e.getMessage()
-            );
+            System.out.println("Erro ao buscar veículos: " + e.getMessage());
         }
 
         return lista;
@@ -231,11 +223,8 @@ if (status == null) {
                     rs.getObject("cilindradas")
                 };
             }
-
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
-
         }
 
         return null;
@@ -244,153 +233,84 @@ if (status == null) {
     
     
     // Método responsável por atualizar os dados de um veículo
-public boolean atualizarVeiculo(
-        int idVeiculo,
-        String nomeMotorista,
-        String cpf,
-        String telefone,
-        String modelo,
-        String placa,
-        String cor,
-        int ano,
-        String motivo,
-        String diagnostico,
-        String status
-) {
-
-    // Verifica se o ID é válido
-    if (idVeiculo <= 0) {
-
-        throw new IllegalArgumentException(
-                "ID do veículo inválido.");
-    }
-
-    // Verifica se o nome do motorista foi informado
-    if (nomeMotorista == null ||
-        nomeMotorista.trim().isEmpty()) {
-
-        throw new IllegalArgumentException(
-                "Nome do motorista obrigatório.");
-    }
-
-    // Verifica se o CPF foi informado
-    if (cpf == null ||
-        cpf.trim().isEmpty()) {
-
-        throw new IllegalArgumentException(
-                "CPF obrigatório.");
-    }
-
-    // Remove pontos e traços do CPF
-    cpf = cpf.replace(".", "")
-             .replace("-", "");
-
-    // Verifica se possui exatamente 11 números
-    if (!cpf.matches("\\d{11}")) {
-
-        throw new IllegalArgumentException(
-                "CPF inválido.");
-    }
-
-    // Verifica se o telefone foi informado
-    if (telefone == null ||
-        telefone.trim().isEmpty()) {
-
-        throw new IllegalArgumentException(
-                "Telefone obrigatório.");
-    }
-
-    // Remove caracteres especiais do telefone
-    telefone = telefone.replace("(", "")
-                       .replace(")", "")
-                       .replace("-", "")
-                       .replace(" ", "");
-
-    // Verifica se possui 10 ou 11 números
-    if (!telefone.matches("\\d{10,11}")) {
-
-        throw new IllegalArgumentException(
-                "Telefone inválido.");
-    }
-
-    // Verifica se a placa foi informada
-    if (placa == null ||
-        placa.trim().isEmpty()) {
-
-        throw new IllegalArgumentException(
-                "Placa obrigatória.");
-    }
-
-    // Verifica se o ano informado é válido
-    if (ano < 1900 ||
-        ano > 2035) {
-
-        throw new IllegalArgumentException(
-                "Ano inválido.");
-    }
-
-    // SQL responsável pela atualização
-    String sql
-            = "UPDATE veiculos SET "
-            + "nome_motorista=?, "
-            + "cpf_motorista=?, "
-            + "telefone_motorista=?, "
-            + "modelo=?, "
-            + "placa=?, "
-            + "cor=?, "
-            + "ano=?, "
-            + "motivo=?, "
-            + "diagnostico=?, "
-            + "status_cadastro=? "
-            + "WHERE id_veiculo=?";
-
-    try (
-
-            // Cria conexão com o banco
-            Connection conn = Conexao.conectar();
-
-            // Prepara o comando SQL
-            PreparedStatement stmt =
-                    conn.prepareStatement(sql)
-
+    public boolean atualizarVeiculo(
+            int idVeiculo,
+            String nomeMotorista,
+            String cpf,
+            String telefone,
+            String modelo,
+            String placa,
+            String cor,
+            int ano,
+            String motivo,
+            String diagnostico,
+            String status,
+            String tipoVeiculo,      
+            Integer quantidadePortas, 
+            Integer cilindradas       
     ) {
+        if (idVeiculo <= 0)
+            throw new IllegalArgumentException("ID do veículo inválido.");
+        if (placa == null || placa.trim().isEmpty())
+            throw new IllegalArgumentException("Placa obrigatória.");
 
-        // Define os parâmetros da query
-        stmt.setString(1, nomeMotorista);
-        stmt.setString(2, cpf);
-        stmt.setString(3, telefone);
-        stmt.setString(4, modelo);
-        stmt.setString(5, placa);
-        stmt.setString(6, cor);
-        stmt.setInt(7, ano);
-        stmt.setString(8, motivo);
-        stmt.setString(9, diagnostico);
-        stmt.setString(10, status);
-        stmt.setInt(11, idVeiculo);
+        ValidacaoVeiculo.validarNome(nomeMotorista);
+        ValidacaoVeiculo.validarCpf(cpf);
+        ValidacaoVeiculo.validarTelefone(telefone);
+        ValidacaoVeiculo.validarAno(ano);
 
-        // Executa o UPDATE
-        stmt.executeUpdate();
+        String sqlVeiculo =
+                "UPDATE veiculos SET "
+                + "nome_motorista=?, cpf_motorista=?, telefone_motorista=?, "
+                + "modelo=?, placa=?, cor=?, ano=?, motivo=?, diagnostico=?, "
+                + "status_cadastro=? WHERE id_veiculo=?";
 
-        // Retorna sucesso
-        return true;
+        try (Connection conn = Conexao.conectar()) {
+            conn.setAutoCommit(false);
 
-    } catch (IllegalArgumentException e) {
+            try (PreparedStatement stmt = conn.prepareStatement(sqlVeiculo)) {
+                stmt.setString(1, nomeMotorista);
+                stmt.setString(2, cpf);
+                stmt.setString(3, telefone);
+                stmt.setString(4, modelo);
+                stmt.setString(5, placa);
+                stmt.setString(6, cor);
+                stmt.setInt(7, ano);
+                stmt.setString(8, motivo);
+                stmt.setString(9, diagnostico);
+                stmt.setString(10, status);
+                stmt.setInt(11, idVeiculo);
+                stmt.executeUpdate();
+            }
 
-        // Captura erros de validação
-        System.out.println(
-                "Erro de validação: "
-                + e.getMessage());
+            // Atualiza tabela específica do tipo
+            if ("CARRO".equals(tipoVeiculo) && quantidadePortas != null) {
+                ValidacaoVeiculo.validarQuantidadePortas(quantidadePortas);
+                String sqlCarro = "UPDATE carros SET quantidade_portas=? WHERE id_veiculo=?";
+                
+                try (PreparedStatement stmt = conn.prepareStatement(sqlCarro)) {
+                    stmt.setInt(1, quantidadePortas);
+                    stmt.setInt(2, idVeiculo);
+                    stmt.executeUpdate();
+                }
+            } else if ("MOTO".equals(tipoVeiculo) && cilindradas != null) {
+                ValidacaoVeiculo.validarCilindradas(cilindradas);
+                String sqlMoto = "UPDATE motos SET cilindradas=? WHERE id_veiculo=?";
+                
+                try (PreparedStatement stmt = conn.prepareStatement(sqlMoto)) {
+                    stmt.setInt(1, cilindradas);
+                    stmt.setInt(2, idVeiculo);
+                    stmt.executeUpdate();
+                }
+            }
 
-        return false;
+            conn.commit();
+            return true;
 
-    } catch (Exception e) {
-
-        // Captura erros relacionados ao banco
-        System.out.println(
-                "Erro ao atualizar veículo: "
-                + e.getMessage());
-
-        return false;
+        } catch (IllegalArgumentException e) {
+            throw e; 
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar veículo: " + e.getMessage(), e);
+        }
     }
-}
 }

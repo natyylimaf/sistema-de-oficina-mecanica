@@ -39,9 +39,7 @@ public class UsuarioDAO {
 
         } catch (Exception e) {
 
-            System.out.println(
-                    "Erro login: "
-                    + e.getMessage()
+            System.out.println("Erro login: " + e.getMessage()
             );
 
             return false;

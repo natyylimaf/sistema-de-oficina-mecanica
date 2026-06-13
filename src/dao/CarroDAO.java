@@ -2,7 +2,7 @@ package dao;
 
 import model.Carro;
 import java.sql.*;
-import java.time.LocalDate;
+import util.ValidacaoVeiculo;
 
 public class CarroDAO {
 
@@ -13,86 +13,13 @@ public class CarroDAO {
         this.conn = conn;
     }
 
-    // Método responsável por validar os dados do carro
-    private void validarCarro(Carro carro) {
-
-        // Verifica se o objeto carro foi informado
-        if (carro == null) {
-            throw new IllegalArgumentException("Dados do carro inválidos.");
-        }
-
-        // Verifica campos obrigatórios
-        if (carro.getNomeMotorista() == null ||
-            carro.getNomeMotorista().trim().isEmpty() ||
-
-            carro.getModelo() == null ||
-            carro.getModelo().trim().isEmpty() ||
-
-            carro.getPlaca() == null ||
-            carro.getPlaca().trim().isEmpty() ||
-
-            carro.getCor() == null ||
-            carro.getCor().trim().isEmpty() ||
-
-            carro.getMotivo() == null ||
-            carro.getMotivo().trim().isEmpty()) {
-
-            throw new IllegalArgumentException("Todos os campos são obrigatórios.");
-        }
-        
-        
-    // Validação do CPF
-    String cpf = carro.getCpfMotorista();
-
-    if (cpf == null ||
-    !cpf.matches("(\\d{11})|(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})")) {
-
-    throw new IllegalArgumentException("CPF inválido.");
-}
-    
-    
-    // Validação do telefone
-    String telefone = carro.getTelefoneMotorista();
-
-    if (telefone == null) {
-
-    throw new IllegalArgumentException("Telefone inválido.");
-}
-
-// Remove caracteres de formatação
-telefone = telefone.replace("(", "")
-                   .replace(")", "")
-                   .replace("-", "")
-                   .replace(" ", "");
-
-// Verifica se possui apenas números
-if (!telefone.matches("\\d{10,11}")) {
-
-    throw new IllegalArgumentException("Telefone inválido.");
-}
-       
-
-        // Verifica se a data de chegada foi informada
-        if (carro.getDataChegada() == null) {
-            throw new IllegalArgumentException("Dados do carro inválidos.");
-        }
-
-        // Verifica se a quantidade de portas é válida
-        if (carro.getQuantidadePortas() <= 0) {
-            throw new IllegalArgumentException("Dados do carro inválidos.");
-        }
-    }
-
     // Método responsável por salvar um carro no banco de dados
     public boolean salvar(Carro carro) {
 
-        // Verifica se a conexão foi criada corretamente
         if (conn == null) {
-            System.out.println("Erro: conexão com banco é nula.");
-            return false;
+            throw new RuntimeException("Conexão com banco é nula.");
         }
 
-        // SQL para inserir os dados gerais do veículo
         String sqlVeiculo =
                 "INSERT INTO veiculos "
                 + "(nome_motorista, cpf_motorista, telefone_motorista, "
@@ -100,32 +27,27 @@ if (!telefone.matches("\\d{10,11}")) {
                 + "diagnostico, tipo_veiculo, status_cadastro) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // SQL para inserir os dados específicos do carro
         String sqlCarro =
                 "INSERT INTO carros "
                 + "(id_veiculo, quantidade_portas) "
                 + "VALUES (?, ?)";
 
-        try {
-            
-            // Executa as validações antes de salvar
-            validarCarro(carro);
+        // Validações — executadas ANTES de qualquer coisa com o banco
+        ValidacaoVeiculo.validarNome(carro.getNomeMotorista());
+        ValidacaoVeiculo.validarCpf(carro.getCpfMotorista());
+        ValidacaoVeiculo.validarTelefone(carro.getTelefoneMotorista());
+        ValidacaoVeiculo.validarAno(carro.getAno());
+        ValidacaoVeiculo.validarData(carro.getDataChegada());
+        ValidacaoVeiculo.validarQuantidadePortas(carro.getQuantidadePortas());
 
-            // Inicia uma transação no banco
+        try {
             conn.setAutoCommit(false);
 
-            // Variável que armazenará o ID gerado
             int idVeiculo = 0;
 
-            // Prepara o INSERT da tabela veiculos
-            try (
-                    PreparedStatement stmtVeiculo =
-                    conn.prepareStatement(
-                            sqlVeiculo,
-                            Statement.RETURN_GENERATED_KEYS)
-            ) {
+            try (PreparedStatement stmtVeiculo =
+                    conn.prepareStatement(sqlVeiculo, Statement.RETURN_GENERATED_KEYS)) {
 
-                // Preenche os parâmetros da query
                 stmtVeiculo.setString(1, carro.getNomeMotorista());
                 stmtVeiculo.setString(2, carro.getCpfMotorista());
                 stmtVeiculo.setString(3, carro.getTelefoneMotorista());
@@ -133,76 +55,43 @@ if (!telefone.matches("\\d{10,11}")) {
                 stmtVeiculo.setString(5, carro.getPlaca());
                 stmtVeiculo.setString(6, carro.getCor());
                 stmtVeiculo.setInt(7, carro.getAno());
-                
-                LocalDate data = carro.getDataChegada();
-                stmtVeiculo.setDate(8, Date.valueOf(data));
-
+                stmtVeiculo.setDate(8, Date.valueOf(carro.getDataChegada()));
                 stmtVeiculo.setString(9, carro.getMotivo());
                 stmtVeiculo.setString(10, carro.getDiagnostico());
                 stmtVeiculo.setString(11, "CARRO");
                 stmtVeiculo.setString(12, carro.getStatusCadastro());
 
-                // Executa o INSERT
                 stmtVeiculo.executeUpdate();
 
-                // Recupera o ID gerado automaticamente
-                try (
-                        ResultSet rs = stmtVeiculo.getGeneratedKeys()
-                ) {
+                try (ResultSet rs = stmtVeiculo.getGeneratedKeys()) {
                     if (rs.next()) {
                         idVeiculo = rs.getInt(1);
                     }
                 }
             }
 
-            // Prepara o INSERT da tabela carros
-            try (
-                    PreparedStatement stmtCarro = conn.prepareStatement(sqlCarro)
-            ) {
-
+            try (PreparedStatement stmtCarro = conn.prepareStatement(sqlCarro)) {
                 stmtCarro.setInt(1, idVeiculo);
                 stmtCarro.setInt(2, carro.getQuantidadePortas());
-
-                // Executa o INSERT
                 stmtCarro.executeUpdate();
             }
 
-            // Confirma a transação
             conn.commit();
-            
             return true;
-            
+
         } catch (SQLException e) {
-
-            // Captura erros relacionados ao banco de dados
             try {
-
-                // Desfaz todas as alterações realizadas
-                // durante a transação
-                if (conn != null) {
-                    conn.rollback();
-                }
-
+                if (conn != null) conn.rollback();
             } catch (SQLException ex) {
-
-                System.out.println("Erro ao desfazer transação: " + ex.getMessage());
+                throw new RuntimeException("Erro ao desfazer transação: " + ex.getMessage(), ex);
             }
-
-            System.out.println("Erro ao salvar carro: " + e.getMessage());
-            return false;
+            throw new RuntimeException("Erro ao salvar carro no banco: " + e.getMessage(), e);
 
         } finally {
-
             try {
-
-                // Restaura o comportamento padrão da conexão
-                if (conn != null) {
-                    conn.setAutoCommit(true);
-                }
-
+                if (conn != null) conn.setAutoCommit(true);
             } catch (SQLException e) {
-
-                System.out.println("Erro ao restaurar conexão.");
+                throw new RuntimeException("Erro ao restaurar conexão: " + e.getMessage(), e);
             }
         }
     }

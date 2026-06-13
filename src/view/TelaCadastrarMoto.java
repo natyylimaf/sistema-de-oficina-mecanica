@@ -229,7 +229,7 @@ public class TelaCadastrarMoto extends JFrame {
         int cilindradas, ano;
         Date dataAntiga;
         LocalDate data;
-        
+
         try {
             // Verifica se todos os campos obrigatórios foram preenchidos
             if (campoNomeMotorista.getText().trim().isEmpty() ||
@@ -245,14 +245,36 @@ public class TelaCadastrarMoto extends JFrame {
                 JOptionPane.showMessageDialog(
                         this,
                         "Todos os campos são obrigatórios!",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE
+                        "Campos obrigatórios",
+                        JOptionPane.WARNING_MESSAGE
                 );
-
                 return;
             }
-            
-            
+
+            // Converte os campos numéricos
+            try {
+                ano = Integer.parseInt(campoAno.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ano inválido. Informe apenas números.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try {
+                cilindradas = Integer.parseInt(campoCilindradas.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Cilindradas inválidas. Informe apenas números.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Converte a data
+            try {
+                dataAntiga = (Date) campoDataChegada.getValue();
+                data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Data de chegada inválida.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             // Obtém os dados dos campos de texto
             nomeMotorista = campoNomeMotorista.getText();
             cpf = campoCPF.getText();
@@ -260,61 +282,28 @@ public class TelaCadastrarMoto extends JFrame {
             modelo = campoModelo.getText();
             placa = campoPlaca.getText();
             cor = campoCor.getText();
-
-            // Converte os campos numéricos de String para int
-            cilindradas = Integer.parseInt(campoCilindradas.getText());
-            ano = Integer.parseInt(campoAno.getText());
-
-            
-            // Obtém a data selecionada no JSpinner
-            dataAntiga = (Date) campoDataChegada.getValue();
-            
-            // Converte Date para LocalDate
-            data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-            
-            // Obtém os textos dos campos de descrição
             motivo = campoMotivoEntrada.getText();
 
-            // Cria um objeto Moto com os dados informados
+            // Cria o objeto Moto
             Moto novaMoto = new Moto(
-                    nomeMotorista,
-                    cpf,
-                    celular,
-                    modelo,
-                    placa,
-                    cor,
-                    ano,
-                    data,
-                    motivo,
-                    "",
-                    "PENDENTE",
-                    cilindradas
+                    nomeMotorista, cpf, celular, modelo, placa,
+                    cor, ano, data, motivo, "", "PENDENTE", cilindradas
             );
 
-            // Cria o objetoDAO responsável pela comunicação com o banco
+            // Salva no banco
             MotoDAO dao = new MotoDAO(util.Conexao.conectar());
-            // Salva a moto no banco de dados
-            boolean salvo = dao.salvar(novaMoto);
-            
-            if (salvo) {
-                JOptionPane.showMessageDialog(this, "Moto salva com sucesso!");
+            dao.salvar(novaMoto);
 
-                limparCampos();
+            JOptionPane.showMessageDialog(this, "Moto salva com sucesso!");
+            limparCampos();
 
-            } else {
+        } catch (IllegalArgumentException e) {
+            // Erro de validação vindo do DAO
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de validação", JOptionPane.WARNING_MESSAGE);
 
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Não foi possível salvar a moto. Verifique a conexão com o banco de dados.",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
-
-        } catch (Exception e) {
-            // Exibe mensagem de erro caso ocorra alguma exceção
-            JOptionPane.showMessageDialog(this, "Erro ao salvar moto. Verifique os dados.\n" + e.getMessage());
+        } catch (RuntimeException e) {
+            // Erro de banco vindo do DAO
+            JOptionPane.showMessageDialog(this, "Erro ao salvar moto: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

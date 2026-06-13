@@ -229,7 +229,7 @@ public class TelaCadastrarCarro extends JFrame {
         int portas, ano;
         Date dataAntiga;
         LocalDate data;
-        
+
         try {
             // Verifica se todos os campos obrigatórios foram preenchidos
             if (campoNomeMotorista.getText().trim().isEmpty() ||
@@ -245,14 +245,36 @@ public class TelaCadastrarCarro extends JFrame {
                 JOptionPane.showMessageDialog(
                         this,
                         "Todos os campos são obrigatórios!",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE
+                        "Campos obrigatórios",
+                        JOptionPane.WARNING_MESSAGE
                 );
-
                 return;
             }
-            
-            
+
+            // Converte os campos numéricos
+            try {
+                ano = Integer.parseInt(campoAno.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ano inválido. Informe apenas números.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try {
+                portas = Integer.parseInt(campoQuantidadePortas.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Quantidade de portas inválida. Informe apenas números.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Converte a data
+            try {
+                dataAntiga = (Date) campoDataChegada.getValue();
+                data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Data de chegada inválida.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             // Obtém os dados dos campos de texto
             nomeMotorista = campoNomeMotorista.getText();
             cpf = campoCPF.getText();
@@ -260,59 +282,28 @@ public class TelaCadastrarCarro extends JFrame {
             modelo = campoModelo.getText();
             placa = campoPlaca.getText();
             cor = campoCor.getText();
-
-            // Converte os campos numéricos de String para int
-            portas = Integer.parseInt(campoQuantidadePortas.getText());
-            ano = Integer.parseInt(campoAno.getText());
-
-            
-            // Obtém a data selecionada no JSpinner
-            dataAntiga = (Date) campoDataChegada.getValue();
-            
-            // Converte Date para LocalDate
-            data = dataAntiga.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-            
-            // Obtém os textos dos campos de descrição
             motivo = campoMotivoEntrada.getText();
 
-            // Cria um objeto Carro com os dados informados
+            // Cria o objeto Carro
             Carro novoCarro = new Carro(
-                    nomeMotorista,
-                    cpf,
-                    celular,
-                    modelo,
-                    placa,
-                    cor,
-                    ano,
-                    data,
-                    motivo,
-                    "",
-                    "PENDENTE",
-                    portas
+                    nomeMotorista, cpf, celular, modelo, placa,
+                    cor, ano, data, motivo, "", "PENDENTE", portas
             );
 
-            // Cria o objetoDAO responsável pela comunicação com o banco
+            // Salva no banco
             CarroDAO dao = new CarroDAO(util.Conexao.conectar());
-            // Salva o carro no banco de dados
-            boolean salvo = dao.salvar(novoCarro);
+            dao.salvar(novoCarro);
 
-            if (salvo) {
-                JOptionPane.showMessageDialog(this, "Carro salvo com sucesso!");
+            JOptionPane.showMessageDialog(this, "Carro salvo com sucesso!");
+            limparCampos();
 
-                limparCampos();
-            } else {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Não foi possível salvar o carro. Verifique a conexão com o banco de dados.",
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            }
+        } catch (IllegalArgumentException e) {
+            // Erro de validação vindo do DAO
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de validação", JOptionPane.WARNING_MESSAGE);
 
-        } catch (Exception e) {
-            // Exibe mensagem de erro caso ocorra alguma exceção
-            JOptionPane.showMessageDialog(this, "Erro ao salvar carro. Verifique os dados.\n" + e.getMessage());
+        } catch (RuntimeException e) {
+            // Erro de banco vindo do DAO
+            JOptionPane.showMessageDialog(this, "Erro ao salvar carro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     

@@ -52,6 +52,8 @@ public class TelaEditarVeiculo extends JFrame {
     private JButton bCancelar;
     
     private int idVeiculo;
+    
+    private String tipoVeiculo;
 
     // Construtor da tela
     public TelaEditarVeiculo(int idVeiculo) {
@@ -339,94 +341,118 @@ public class TelaEditarVeiculo extends JFrame {
     
     // Método responsável por carregar os dados do veículo selecionado
     private void carregarDadosVeiculo() {
-        VeiculoDAO dao = new VeiculoDAO();
-        Object[] dados = dao.buscarPorId(idVeiculo);
+        try {
+            VeiculoDAO dao = new VeiculoDAO();
+            Object[] dados = dao.buscarPorId(idVeiculo);
 
-        if (dados == null) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Veículo não encontrado!"
-            );
-            return;
-        }
-
-        campoNomeMotorista.setText(dados[1].toString());
-        campoCPF.setText(dados[2].toString());
-        campoTelefone.setText(dados[3].toString());
-        campoModelo.setText(dados[4].toString());
-        campoPlaca.setText(dados[5].toString());
-        campoCor.setText(dados[6].toString());
-        campoAno.setText(dados[7].toString());
-
-        campoMotivoEntrada.setText(
-                dados[9] == null ? "" : dados[9].toString()
-        );
-
-        campoDiagnostico.setText(
-                dados[10] == null ? "" : dados[10].toString()
-        );
-
-        if (dados[12] != null) {
-            comboStatus.setSelectedItem(
-                    dados[12].toString()
-            );
-        }
-
-        String tipo = dados[11].toString();
-
-        if (tipo.equals("CARRO")) {
-
-            mostrarCamposCarro();
-
-            if (dados[13] != null) {
-                campoQuantidadePortas.setText(
-                        dados[13].toString()
-                );
+            if (dados == null) {
+                JOptionPane.showMessageDialog(this, "Veículo não encontrado!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
-        } else {
+            campoNomeMotorista.setText(dados[1].toString());
+            campoCPF.setText(dados[2].toString());
+            campoTelefone.setText(dados[3].toString());
+            campoModelo.setText(dados[4].toString());
+            campoPlaca.setText(dados[5].toString());
+            campoCor.setText(dados[6].toString());
+            campoAno.setText(dados[7].toString());
+            campoMotivoEntrada.setText(dados[9] == null ? "" : dados[9].toString());
+            campoDiagnostico.setText(dados[10] == null ? "" : dados[10].toString());
 
-            mostrarCamposMoto();
-
-            if (dados[14] != null) {
-                campoCilindradas.setText(
-                        dados[14].toString()
-                );
+            if (dados[12] != null) {
+                comboStatus.setSelectedItem(dados[12].toString());
             }
+
+            String tipo = dados[11].toString();
+            this.tipoVeiculo = tipo;
+
+            if (tipo.equals("CARRO")) {
+                mostrarCamposCarro();
+                if (dados[13] != null) campoQuantidadePortas.setText(dados[13].toString());
+            } else {
+                mostrarCamposMoto();
+                if (dados[14] != null) campoCilindradas.setText(dados[14].toString());
+            }
+
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar dados do veículo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    // Método responsável por salvar as alterações do veículo
+
+
     private void salvarAlteracoes() {
-        VeiculoDAO dao = new VeiculoDAO();
+        try {
+            if (campoNomeMotorista.getText().trim().isEmpty() ||
+                campoCPF.getText().trim().isEmpty() ||
+                campoTelefone.getText().trim().isEmpty() ||
+                campoModelo.getText().trim().isEmpty() ||
+                campoPlaca.getText().trim().isEmpty() ||
+                campoCor.getText().trim().isEmpty() ||
+                campoAno.getText().trim().isEmpty() ||
+                campoMotivoEntrada.getText().trim().isEmpty()) {
 
-        boolean sucesso = dao.atualizarVeiculo(
-                idVeiculo,
-                campoNomeMotorista.getText(),
-                campoCPF.getText(),
-                campoTelefone.getText(),
-                campoModelo.getText(),
-                campoPlaca.getText(),
-                campoCor.getText(),
-                Integer.parseInt(campoAno.getText()),
-                campoMotivoEntrada.getText(),
-                campoDiagnostico.getText(),
-                comboStatus.getSelectedItem().toString()
-        );
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Todos os campos são obrigatórios, exceto o diagnóstico!",
+                        "Campos obrigatórios",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
 
-        if (sucesso) {
+            int ano;
+            
+            try {
+                ano = Integer.parseInt(campoAno.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ano inválido. Informe apenas números.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Veículo atualizado com sucesso!"
+            Integer quantidadePortas = null;
+            Integer cilindradas = null;
+
+            if ("CARRO".equals(tipoVeiculo)) {
+                try {
+                    quantidadePortas = Integer.parseInt(campoQuantidadePortas.getText().trim());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Quantidade de portas inválida.", "Erro", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            } else {
+                try {
+                    cilindradas = Integer.parseInt(campoCilindradas.getText().trim());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Cilindradas inválidas.", "Erro", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+
+            VeiculoDAO dao = new VeiculoDAO();
+            dao.atualizarVeiculo(
+                    idVeiculo,
+                    campoNomeMotorista.getText(),
+                    campoCPF.getText(),
+                    campoTelefone.getText(),
+                    campoModelo.getText(),
+                    campoPlaca.getText(),
+                    campoCor.getText(),
+                    ano,
+                    campoMotivoEntrada.getText(),
+                    campoDiagnostico.getText(),
+                    comboStatus.getSelectedItem().toString(),
+                    tipoVeiculo,
+                    quantidadePortas,
+                    cilindradas
             );
 
-        } else {
+            JOptionPane.showMessageDialog(this, "Veículo atualizado com sucesso!");
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao atualizar veículo!"
-            );
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de validação", JOptionPane.WARNING_MESSAGE);
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar veículo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
