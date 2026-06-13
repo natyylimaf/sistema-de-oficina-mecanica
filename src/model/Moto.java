@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class Moto extends Veiculo {
     private int cilindradas;
-    private double orcamento;
     private static final double MAO_DE_OBRA = 500.0;
 
+    // Construtor utilizado para carregar uma moto já existente no banco
     public Moto(
             int idVeiculo,
             String nomeMotorista,
@@ -41,7 +41,7 @@ public class Moto extends Veiculo {
         this.cilindradas = cilindradas;
     }
 
-    
+    // Construtor utilizado para cadastrar uma nova moto
     public Moto(
             String nomeMotorista,
             String cpfMotorista,
@@ -78,28 +78,14 @@ public class Moto extends Veiculo {
     public int getCilindradas() { return cilindradas; }
     public void setCilindradas(int cilindradas) { this.cilindradas = cilindradas; }
     
-    public double getOrcamento() { return orcamento; }
-    
     public static double getMaoDeObra() { return MAO_DE_OBRA; }
 
     
     @Override
     public String toString() {
         return "Moto{" +
-                "idVeiculo=" + getIdVeiculo() +
-                ", nomeMotorista='" + getNomeMotorista() + '\'' +
-                ", cpfMotorista='" + getCpfMotorista() + '\'' +
-                ", telefoneMotorista='" + getTelefoneMotorista() + '\'' +
-                ", modelo='" + getModelo() + '\'' +
-                ", placa='" + getPlaca() + '\'' +
-                ", cor='" + getCor() + '\'' +
-                ", ano=" + getAno() +
-                ", dataChegada=" + getDataChegada() +
-                ", motivo='" + getMotivo() + '\'' +
-                ", diagnostico='" + getDiagnostico() + '\'' +
-                ", tipoVeiculo='" + getTipoVeiculo() + '\'' +
-                ", statusCadastro='" + getStatusCadastro() + '\'' +
-                ", cilindradas=" + getCilindradas() +
+                super.toString() +
+                ", cilindradas=" + cilindradas +
                 ", orcamento=" + getOrcamento() +
                 '}';
     }
@@ -107,7 +93,7 @@ public class Moto extends Veiculo {
     
     @Override
     public double gerarOrcamento(double valorPecas) {
-        orcamento = MAO_DE_OBRA + valorPecas;
-        return orcamento;
+        setOrcamento(MAO_DE_OBRA + valorPecas);
+        return getOrcamento();
     }
 }

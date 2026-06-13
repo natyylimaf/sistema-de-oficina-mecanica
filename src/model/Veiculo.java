@@ -25,6 +25,7 @@ public abstract class Veiculo {
     private String statusCadastro;
 
     private boolean registroAtivo;
+    private double orcamento;
 
     public Veiculo(
             int idVeiculo,
@@ -99,6 +100,27 @@ public abstract class Veiculo {
 
     public boolean isRegistroAtivo() { return registroAtivo; }
     public void setRegistroAtivo(boolean registroAtivo) { this.registroAtivo = registroAtivo; }
+    
+    public double getOrcamento() { return orcamento; }
+    public void setOrcamento(double orcamento) { this.orcamento = orcamento; }
+    
+    
+    @Override
+    public String toString() {
+        return "idVeiculo=" + idVeiculo +
+                ", nomeMotorista='" + nomeMotorista + '\'' +
+                ", cpfMotorista='" + cpfMotorista + '\'' +
+                ", telefoneMotorista='" + telefoneMotorista + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", placa='" + placa + '\'' +
+                ", cor='" + cor + '\'' +
+                ", ano=" + ano +
+                ", dataChegada=" + dataChegada +
+                ", motivo='" + motivo + '\'' +
+                ", diagnostico='" + diagnostico + '\'' +
+                ", tipoVeiculo='" + tipoVeiculo + '\'' +
+                ", statusCadastro='" + statusCadastro + '\'';
+    }
 
     
     public abstract double gerarOrcamento(double valorPecas);

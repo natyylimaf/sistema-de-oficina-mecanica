@@ -53,7 +53,7 @@ public class TelaEditarVeiculo extends JFrame {
     
     private int idVeiculo;
 
-    
+    // Construtor da tela
     public TelaEditarVeiculo(int idVeiculo) {
         this.idVeiculo = idVeiculo;
         
@@ -71,6 +71,7 @@ public class TelaEditarVeiculo extends JFrame {
         setVisible(true);
     }
 
+    // Método responsável pela montagem da interface gráfica da tela
     private void initComponents() {
         painel = new JPanel();
         painel.setLayout(null);
@@ -89,7 +90,6 @@ public class TelaEditarVeiculo extends JFrame {
         labelTitulo.setBounds(250, 20, 500, 40);
         painel.add(labelTitulo);
         
-        
         // NOME DO MOTORISTA
         labelNomeMotorista = new JLabel("Nome do Motorista:");
         labelNomeMotorista.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -99,7 +99,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoNomeMotorista = new JTextField();
         campoNomeMotorista.setBounds(80, 120, 800, 35);
         painel.add(campoNomeMotorista);
-
         
         // CPF
         labelCPF = new JLabel("CPF:");
@@ -110,7 +109,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoCPF = new JTextField();
         campoCPF.setBounds(80, 205, 350, 35);
         painel.add(campoCPF);
-
         
         // TELEFONE
         labelTelefone = new JLabel("Telefone:");
@@ -121,7 +119,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoTelefone = new JTextField();
         campoTelefone.setBounds(530, 205, 350, 35);
         painel.add(campoTelefone);
-
         
         // MODELO
         labelModelo = new JLabel("Modelo:");
@@ -132,7 +129,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoModelo = new JTextField();
         campoModelo.setBounds(80, 295, 350, 35);
         painel.add(campoModelo);
-
         
         // PLACA
         labelPlaca = new JLabel("Placa:");
@@ -143,7 +139,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoPlaca = new JTextField();
         campoPlaca.setBounds(530, 295, 350, 35);
         painel.add(campoPlaca);
-
         
         // COR
         labelCor = new JLabel("Cor:");
@@ -155,7 +150,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoCor.setBounds(80, 385, 350, 35);
         painel.add(campoCor);
         
-        
         // ANO
         labelAno = new JLabel("Ano:");
         labelAno.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -165,7 +159,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoAno = new JTextField();
         campoAno.setBounds(530, 385, 350, 35);
         painel.add(campoAno);
-        
         
         // QUANTIDADE DE PORTAS
         labelQuantidadePortas = new JLabel("Quantidade de Portas:");
@@ -177,7 +170,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoQuantidadePortas.setBounds(80, 475, 350, 35);
         painel.add(campoQuantidadePortas);
         
-        
         // CILINDRADAS
         labelCilindradas = new JLabel("Cilindradas:");
         labelCilindradas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -187,7 +179,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoCilindradas = new JTextField();
         campoCilindradas.setBounds(80, 475, 350, 35);
         painel.add(campoCilindradas);
-
         
         // DATA
         labelDataChegada = new JLabel("Data de Chegada:");
@@ -202,7 +193,6 @@ public class TelaEditarVeiculo extends JFrame {
 
         campoDataChegada.setBounds(530, 475, 350, 35);
         painel.add(campoDataChegada);
-
         
         // MOTIVO DA ENTRADA
         labelMotivoEntrada = new JLabel("Motivo da Entrada:");
@@ -220,7 +210,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoMotivoEntrada.setWrapStyleWord(true);
         scrollMotivoEntrada.setBounds(80, 565, 350, 60);
         painel.add(scrollMotivoEntrada);
-
         
         // DIAGNÓSTICO
         labelDiagnostico = new JLabel("Diagnóstico:");
@@ -238,7 +227,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoDiagnostico.setWrapStyleWord(true);
         scrollDiagnostico.setBounds(530, 565, 350, 60);
         painel.add(scrollDiagnostico);
-
         
         // STATUS
         labelStatus = new JLabel("Status:");
@@ -261,7 +249,6 @@ public class TelaEditarVeiculo extends JFrame {
         comboStatus.setBounds(180, 640, 200, 30);
         painel.add(comboStatus);
 
-
         // MÃO DE OBRA
         labelMaoDeObra = new JLabel("Mão de Obra:");
         labelMaoDeObra.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -273,9 +260,8 @@ public class TelaEditarVeiculo extends JFrame {
         campoMaoDeObra.setEditable(false);
         painel.add(campoMaoDeObra);
         
-        
         // VALOR DAS PEÇAS
-        labelValorPecas = new JLabel("Valos das Peças:");
+        labelValorPecas = new JLabel("Valor das Peças:");
         labelValorPecas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         labelValorPecas.setBounds(80, 800, 100, 25);
         painel.add(labelValorPecas);
@@ -283,7 +269,6 @@ public class TelaEditarVeiculo extends JFrame {
         campoValorPecas = new JTextField();
         campoValorPecas.setBounds(180, 800, 200, 30);
         painel.add(campoValorPecas);
-        
         
         // ORÇAMENTO
         labelOrcamento = new JLabel("Orçamento:");
@@ -296,13 +281,11 @@ public class TelaEditarVeiculo extends JFrame {
         campoOrcamento.setEditable(false);
         painel.add(campoOrcamento);
         
-        
         // BOTÃO GERAR ORÇAMENTO
         bGerarOrcamento = new JButton("Gerar Orçamento");
         bGerarOrcamento.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
         bGerarOrcamento.setBounds(80, 920, 170, 40);
         painel.add(bGerarOrcamento);
-        
         
         // BOTÃO SALVAR ALTERAÇÕES
         bSalvar = new JButton("Salvar Alterações");
@@ -312,7 +295,6 @@ public class TelaEditarVeiculo extends JFrame {
         bSalvar.setBounds(80, 1020, 190, 40);
         bSalvar.addActionListener(e -> salvarAlteracoes());
         painel.add(bSalvar);
-        
         
         // BOTÃO CANCELAR
         bCancelar = new JButton("Cancelar");
@@ -355,7 +337,7 @@ public class TelaEditarVeiculo extends JFrame {
         campoCilindradas.setVisible(true);
     }
     
-    
+    // Método responsável por carregar os dados do veículo selecionado
     private void carregarDadosVeiculo() {
         VeiculoDAO dao = new VeiculoDAO();
         Object[] dados = dao.buscarPorId(idVeiculo);
@@ -414,8 +396,7 @@ public class TelaEditarVeiculo extends JFrame {
         }
     }
     
-    
-    
+    // Método responsável por salvar as alterações do veículo
     private void salvarAlteracoes() {
         VeiculoDAO dao = new VeiculoDAO();
 
@@ -449,7 +430,7 @@ public class TelaEditarVeiculo extends JFrame {
         }
     }
     
-    
+    // Método responsável por cancelar a edição e retornar à tela de busca
     private void cancelar() {
         TelaBuscarVeiculos tela = new TelaBuscarVeiculos();
         tela.setVisible(true);

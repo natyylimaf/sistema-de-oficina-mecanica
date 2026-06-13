@@ -1,9 +1,11 @@
 package view;
 
+import javax.swing.*;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
+
 import java.util.Date;
-import javax.swing.*;
 
 import model.Moto;
 import dao.MotoDAO;
@@ -29,10 +31,10 @@ public class TelaCadastrarMoto extends JFrame {
     private JTextField campoNomeMotorista;
     private JTextField campoCPF;
     private JTextField campoTelefone;
-    private JTextField campoModeloVeiculo;
+    private JTextField campoModelo;
     private JTextField campoPlaca;
     private JTextField campoCor;
-    private JTextField campoAnoVeiculo;
+    private JTextField campoAno;
     private JTextField campoCilindradas;
     private JTextField campoStatus;
     
@@ -57,6 +59,7 @@ public class TelaCadastrarMoto extends JFrame {
         setVisible(true);
     }
 
+    // Método responsável pela montagem da interface gráfica da tela
     private void initComponents() {
         painel = new JPanel();
         painel.setLayout(null);
@@ -74,7 +77,6 @@ public class TelaCadastrarMoto extends JFrame {
         labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         labelTitulo.setBounds(250, 20, 500, 40);
         painel.add(labelTitulo);
-
         
         // NOME DO MOTORISTA
         labelNomeMotorista = new JLabel("Nome do Motorista:");
@@ -85,7 +87,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoNomeMotorista = new JTextField();
         campoNomeMotorista.setBounds(80, 120, 800, 35);
         painel.add(campoNomeMotorista);
-
         
         // CPF
         labelCPF = new JLabel("CPF:");
@@ -97,7 +98,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoCPF.setBounds(80, 205, 350, 35);
         painel.add(campoCPF);
 
-        
         // TELEFONE
         labelTelefone = new JLabel("Telefone:");
         labelTelefone.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -107,7 +107,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoTelefone = new JTextField();
         campoTelefone.setBounds(530, 205, 350, 35);
         painel.add(campoTelefone);
-
         
         // MODELO
         labelModelo = new JLabel("Modelo:");
@@ -115,10 +114,9 @@ public class TelaCadastrarMoto extends JFrame {
         labelModelo.setBounds(80, 265, 100, 25);
         painel.add(labelModelo);
 
-        campoModeloVeiculo = new JTextField();
-        campoModeloVeiculo.setBounds(80, 295, 350, 35);
-        painel.add(campoModeloVeiculo);
-
+        campoModelo = new JTextField();
+        campoModelo.setBounds(80, 295, 350, 35);
+        painel.add(campoModelo);
         
         // PLACA
         labelPlaca = new JLabel("Placa:");
@@ -129,7 +127,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoPlaca = new JTextField();
         campoPlaca.setBounds(530, 295, 350, 35);
         painel.add(campoPlaca);
-
         
         // COR
         labelCor = new JLabel("Cor:");
@@ -140,7 +137,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoCor = new JTextField();
         campoCor.setBounds(80, 385, 350, 35);
         painel.add(campoCor);
-
         
         // ANO
         labelAno = new JLabel("Ano:");
@@ -148,10 +144,9 @@ public class TelaCadastrarMoto extends JFrame {
         labelAno.setBounds(530, 355, 100, 25);
         painel.add(labelAno);
 
-        campoAnoVeiculo = new JTextField();
-        campoAnoVeiculo.setBounds(530, 385, 350, 35);
-        painel.add(campoAnoVeiculo);
-
+        campoAno = new JTextField();
+        campoAno.setBounds(530, 385, 350, 35);
+        painel.add(campoAno);
         
         // CILINDRADAS
         labelCilindradas = new JLabel("Cilindradas:");
@@ -162,7 +157,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoCilindradas = new JTextField();
         campoCilindradas.setBounds(80, 475, 350, 35);
         painel.add(campoCilindradas);
-
         
         // DATA CHEGADA
         labelDataChegada = new JLabel("Data de Chegada:");
@@ -177,7 +171,6 @@ public class TelaCadastrarMoto extends JFrame {
         
         campoDataChegada.setBounds(530, 475, 350, 35);
         painel.add(campoDataChegada);
-
         
         // MOTIVO DA ENTRADA
         labelMotivoEntrada = new JLabel("Motivo da Entrada:");
@@ -197,7 +190,6 @@ public class TelaCadastrarMoto extends JFrame {
         scrollMotivoEntrada.setBounds(80, 565, 350, 60);
         painel.add(scrollMotivoEntrada);
         
-        
         // STATUS
         labelStatus = new JLabel("Status:");
         labelStatus.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -208,7 +200,6 @@ public class TelaCadastrarMoto extends JFrame {
         campoStatus.setBounds(530, 565, 350, 35);
         campoStatus.setEditable(false);
         painel.add(campoStatus);
-
   
         // BOTÃO SALVAR
         bSalvar = new JButton("Salvar");
@@ -218,7 +209,6 @@ public class TelaCadastrarMoto extends JFrame {
         bSalvar.setBounds(80, 650, 140, 40);
         bSalvar.addActionListener(this::bSalvarActionPerformed);
         painel.add(bSalvar);
-
 
         // BOTÃO CANCELAR
         bCancelar = new JButton("Cancelar");
@@ -232,6 +222,7 @@ public class TelaCadastrarMoto extends JFrame {
         painel.setPreferredSize(new java.awt.Dimension(980, 1200));
     }
     
+    
     // Método executado quando o botão "Salvar" é clicado
     private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {
         String nomeMotorista, cpf, celular, modelo, placa, cor, motivo;
@@ -244,10 +235,10 @@ public class TelaCadastrarMoto extends JFrame {
             if (campoNomeMotorista.getText().trim().isEmpty() ||
                 campoCPF.getText().trim().isEmpty() ||
                 campoTelefone.getText().trim().isEmpty() ||
-                campoModeloVeiculo.getText().trim().isEmpty() ||
+                campoModelo.getText().trim().isEmpty() ||
                 campoPlaca.getText().trim().isEmpty() ||
                 campoCor.getText().trim().isEmpty() ||
-                campoAnoVeiculo.getText().trim().isEmpty() ||
+                campoAno.getText().trim().isEmpty() ||
                 campoCilindradas.getText().trim().isEmpty() ||
                 campoMotivoEntrada.getText().trim().isEmpty()) {
 
@@ -266,13 +257,13 @@ public class TelaCadastrarMoto extends JFrame {
             nomeMotorista = campoNomeMotorista.getText();
             cpf = campoCPF.getText();
             celular = campoTelefone.getText();
-            modelo = campoModeloVeiculo.getText();
+            modelo = campoModelo.getText();
             placa = campoPlaca.getText();
             cor = campoCor.getText();
 
             // Converte os campos numéricos de String para int
             cilindradas = Integer.parseInt(campoCilindradas.getText());
-            ano = Integer.parseInt(campoAnoVeiculo.getText());
+            ano = Integer.parseInt(campoAno.getText());
 
             
             // Obtém a data selecionada no JSpinner
@@ -307,10 +298,7 @@ public class TelaCadastrarMoto extends JFrame {
             boolean salvo = dao.salvar(novaMoto);
             
             if (salvo) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Moto salva com sucesso!"
-                );
+                JOptionPane.showMessageDialog(this, "Moto salva com sucesso!");
 
                 limparCampos();
 
@@ -331,23 +319,22 @@ public class TelaCadastrarMoto extends JFrame {
     }
 
     
+    // Método executado quando o botão "Cancelar" é clicado
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt){
         TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
         tela.setVisible(true);
         dispose();
     }
     
-    
-    
     // Método para limpar os campos após o cadastro da moto
     private void limparCampos() {
         campoNomeMotorista.setText("");
         campoCPF.setText("");
         campoTelefone.setText("");
-        campoModeloVeiculo.setText("");
+        campoModelo.setText("");
         campoPlaca.setText("");
         campoCor.setText("");
-        campoAnoVeiculo.setText("");
+        campoAno.setText("");
         campoCilindradas.setText("");
         campoMotivoEntrada.setText("");
 
@@ -355,6 +342,8 @@ public class TelaCadastrarMoto extends JFrame {
 
         campoStatus.setText("PENDENTE");
     }    
+    
+    
     
     public static void main(String[] args) {
         new TelaCadastrarMoto();

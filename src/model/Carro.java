@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class Carro extends Veiculo {
     private int quantidadePortas;
-    private double orcamento;
     private static final double MAO_DE_OBRA = 850.0;
 
+    // Construtor utilizado para carregar um carro já existente no banco
     public Carro(
             int idVeiculo,
             String nomeMotorista,
@@ -41,7 +41,7 @@ public class Carro extends Veiculo {
         this.quantidadePortas = quantidadePortas;
     }
 
-    
+    // Construtor utilizado para cadastrar um novo carro
     public Carro(
             String nomeMotorista, 
             String cpfMotorista, 
@@ -78,28 +78,14 @@ public class Carro extends Veiculo {
     public int getQuantidadePortas() { return quantidadePortas; }
     public void setQuantidadePortas(int quantidadePortas) { this.quantidadePortas = quantidadePortas; }
     
-    public double getOrcamento() { return orcamento; }
-    
     public static double getMaoDeObra() { return MAO_DE_OBRA; }
 
     
     @Override
     public String toString() {
         return "Carro{" +
-                "idVeiculo=" + getIdVeiculo() +
-                ", nomeMotorista='" + getNomeMotorista() + '\'' +
-                ", cpfMotorista='" + getCpfMotorista() + '\'' +
-                ", telefoneMotorista='" + getTelefoneMotorista() + '\'' +
-                ", modelo='" + getModelo() + '\'' +
-                ", placa='" + getPlaca() + '\'' +
-                ", cor='" + getCor() + '\'' +
-                ", ano=" + getAno() +
-                ", dataChegada=" + getDataChegada() +
-                ", motivo='" + getMotivo() + '\'' +
-                ", diagnostico='" + getDiagnostico() + '\'' +
-                ", tipoVeiculo='" + getTipoVeiculo() + '\'' +
-                ", statusCadastro='" + getStatusCadastro() + '\'' +
-                ", quantidadePortas=" + getQuantidadePortas() +
+                super.toString() +
+                ", quantidadePortas=" + quantidadePortas +
                 ", orcamento=" + getOrcamento() +
                 '}';
     }
@@ -107,7 +93,7 @@ public class Carro extends Veiculo {
     
     @Override
     public double gerarOrcamento(double valorPecas) {
-        orcamento = MAO_DE_OBRA + valorPecas;
-        return orcamento;
+        setOrcamento(MAO_DE_OBRA + valorPecas);
+        return getOrcamento();
     }
 }

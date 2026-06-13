@@ -1,13 +1,15 @@
 package view;
 
+import javax.swing.*;
+
+import java.util.Date;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 
 import model.Carro;
 import dao.CarroDAO;
 
-import java.util.Date;
-import javax.swing.*;
 
 public class TelaCadastrarCarro extends JFrame {
     // Declaração das variáveis
@@ -58,6 +60,7 @@ public class TelaCadastrarCarro extends JFrame {
         setVisible(true);
     }
 
+    // Método responsável pela montagem da interface gráfica da tela
     private void initComponents() {
         painel = new JPanel();
         painel.setLayout(null);
@@ -75,7 +78,6 @@ public class TelaCadastrarCarro extends JFrame {
         labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         labelTitulo.setBounds(250, 20, 500, 40);
         painel.add(labelTitulo);
-
         
         // NOME DO MOTORISTA
         labelNomeMotorista = new JLabel("Nome do Motorista:");
@@ -86,7 +88,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoNomeMotorista = new JTextField();
         campoNomeMotorista.setBounds(80, 120, 800, 35);
         painel.add(campoNomeMotorista);
-
         
         // CPF
         labelCPF = new JLabel("CPF:");
@@ -98,7 +99,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoCPF.setBounds(80, 205, 350, 35);
         painel.add(campoCPF);
 
-        
         // TELEFONE
         labelTelefone = new JLabel("Telefone:");
         labelTelefone.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
@@ -108,7 +108,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoTelefone = new JTextField();
         campoTelefone.setBounds(530, 205, 350, 35);
         painel.add(campoTelefone);
-
         
         // MODELO
         labelModelo = new JLabel("Modelo:");
@@ -119,7 +118,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoModelo = new JTextField();
         campoModelo.setBounds(80, 295, 350, 35);
         painel.add(campoModelo);
-
         
         // PLACA 
         labelPlaca = new JLabel("Placa:");
@@ -130,7 +128,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoPlaca = new JTextField();
         campoPlaca.setBounds(530, 295, 350, 35);
         painel.add(campoPlaca);
-
         
         // COR
         labelCor = new JLabel("Cor:");
@@ -141,7 +138,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoCor = new JTextField();
         campoCor.setBounds(80, 385, 350, 35);
         painel.add(campoCor);
-
         
         // ANO
         labelAno = new JLabel("Ano:");
@@ -152,7 +148,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoAno = new JTextField();
         campoAno.setBounds(530, 385, 350, 35);
         painel.add(campoAno);
-
         
         // PORTAS
         labelQuantidadePortas = new JLabel("Quantidade de Portas:");
@@ -163,7 +158,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoQuantidadePortas = new JTextField();
         campoQuantidadePortas.setBounds(80, 475, 350, 35);
         painel.add(campoQuantidadePortas);
-
         
         // DATA CHEGADA
         labelDataChegada = new JLabel("Data de Chegada:");
@@ -178,7 +172,6 @@ public class TelaCadastrarCarro extends JFrame {
 
         campoDataChegada.setBounds(530, 475, 350, 35);
         painel.add(campoDataChegada);
-
         
         // MOTIVO DA ENTRADA
         labelMotivoEntrada = new JLabel("Motivo da Entrada:");
@@ -196,7 +189,6 @@ public class TelaCadastrarCarro extends JFrame {
         campoMotivoEntrada.setWrapStyleWord(true);
         scrollMotivoEntrada.setBounds(80, 565, 350, 60);
         painel.add(scrollMotivoEntrada);
-
         
         // STATUS
         labelStatus = new JLabel("Status:");
@@ -218,7 +210,6 @@ public class TelaCadastrarCarro extends JFrame {
         bSalvar.addActionListener(this::bSalvarActionPerformed);
         painel.add(bSalvar);
 
-
         // BOTÃO CANCELAR
         bCancelar = new JButton("Cancelar");
         bCancelar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
@@ -238,7 +229,6 @@ public class TelaCadastrarCarro extends JFrame {
         int portas, ano;
         Date dataAntiga;
         LocalDate data;
-        
         
         try {
             // Verifica se todos os campos obrigatórios foram preenchidos
@@ -304,14 +294,11 @@ public class TelaCadastrarCarro extends JFrame {
 
             // Cria o objetoDAO responsável pela comunicação com o banco
             CarroDAO dao = new CarroDAO(util.Conexao.conectar());
-            // Salva a moto no banco de dados
+            // Salva o carro no banco de dados
             boolean salvo = dao.salvar(novoCarro);
 
             if (salvo) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Carro salvo com sucesso!"
-                );
+                JOptionPane.showMessageDialog(this, "Carro salvo com sucesso!");
 
                 limparCampos();
             } else {
@@ -325,16 +312,17 @@ public class TelaCadastrarCarro extends JFrame {
 
         } catch (Exception e) {
             // Exibe mensagem de erro caso ocorra alguma exceção
-            JOptionPane.showMessageDialog(this, "Erro ao salvar. Verifique os dados.\n" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao salvar carro. Verifique os dados.\n" + e.getMessage());
         }
     }
     
+    
+    // Método executado quando o botão "Cancelar" é clicado
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt){
         TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
         tela.setVisible(true);
         dispose();
     }
-    
     
     // Método para limpar os campos após o cadastro do carro
     private void limparCampos() {

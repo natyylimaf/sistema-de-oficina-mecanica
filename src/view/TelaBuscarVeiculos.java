@@ -1,13 +1,14 @@
 package view;
 
-import dao.VeiculoDAO;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import java.util.List;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import dao.VeiculoDAO;
 
 public class TelaBuscarVeiculos extends JFrame {
     // Declaração das variáveis
@@ -48,6 +49,7 @@ public class TelaBuscarVeiculos extends JFrame {
     
     }
 
+    // Método responsável pela montagem da interface gráfica da tela
     private void initComponents() {
         painel = new JPanel();
         painel.setLayout(null);
@@ -138,7 +140,7 @@ public class TelaBuscarVeiculos extends JFrame {
         modeloTabela.addColumn("Cliente");
         modeloTabela.addColumn("Status");
 
-        // Criando da JTable usando o modelo de dados
+        // Cria a tabela utilizando o modelo de dados
         tabelaVeiculos = new JTable(modeloTabela) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -216,6 +218,7 @@ public class TelaBuscarVeiculos extends JFrame {
         }
     }
     
+    // Método executado quando o botão "Voltar" é clicado
     private void bVoltarActionPerformed(java.awt.event.ActionEvent evt){
         TelaMenu tela = new TelaMenu();
         tela.setVisible(true);
