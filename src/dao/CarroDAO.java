@@ -18,8 +18,26 @@ public class CarroDAO {
 
         // Verifica se o objeto carro foi informado
         if (carro == null) {
-            throw new IllegalArgumentException(
-                    "Dados do carro inválidos.");
+            throw new IllegalArgumentException("Dados do carro inválidos.");
+        }
+
+        // Verifica campos obrigatórios
+        if (carro.getNomeMotorista() == null ||
+            carro.getNomeMotorista().trim().isEmpty() ||
+
+            carro.getModelo() == null ||
+            carro.getModelo().trim().isEmpty() ||
+
+            carro.getPlaca() == null ||
+            carro.getPlaca().trim().isEmpty() ||
+
+            carro.getCor() == null ||
+            carro.getCor().trim().isEmpty() ||
+
+            carro.getMotivo() == null ||
+            carro.getMotivo().trim().isEmpty()) {
+
+            throw new IllegalArgumentException("Todos os campos são obrigatórios.");
         }
         
         
@@ -29,8 +47,7 @@ public class CarroDAO {
     if (cpf == null ||
     !cpf.matches("(\\d{11})|(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})")) {
 
-    throw new IllegalArgumentException(
-            "CPF inválido.");
+    throw new IllegalArgumentException("CPF inválido.");
 }
     
     
@@ -39,8 +56,7 @@ public class CarroDAO {
 
     if (telefone == null) {
 
-    throw new IllegalArgumentException(
-            "Telefone inválido.");
+    throw new IllegalArgumentException("Telefone inválido.");
 }
 
 // Remove caracteres de formatação
@@ -52,36 +68,29 @@ telefone = telefone.replace("(", "")
 // Verifica se possui apenas números
 if (!telefone.matches("\\d{10,11}")) {
 
-    throw new IllegalArgumentException(
-            "Telefone inválido.");
+    throw new IllegalArgumentException("Telefone inválido.");
 }
        
 
         // Verifica se a data de chegada foi informada
         if (carro.getDataChegada() == null) {
-            throw new IllegalArgumentException(
-                    "Dados do carro inválidos.");
+            throw new IllegalArgumentException("Dados do carro inválidos.");
         }
 
         // Verifica se a quantidade de portas é válida
         if (carro.getQuantidadePortas() <= 0) {
-            throw new IllegalArgumentException(
-                    "Dados do carro inválidos.");
+            throw new IllegalArgumentException("Dados do carro inválidos.");
         }
     }
 
     // Método responsável por salvar um carro no banco de dados
-    public void salvar(Carro carro) {
+    public boolean salvar(Carro carro) {
 
         // Verifica se a conexão foi criada corretamente
         if (conn == null) {
-            System.out.println(
-                    "Erro: conexão com banco é nula.");
-            return;
+            System.out.println("Erro: conexão com banco é nula.");
+            return false;
         }
-
-        // Executa as validações antes de salvar
-        validarCarro(carro);
 
         // SQL para inserir os dados gerais do veículo
         String sqlVeiculo =
@@ -98,6 +107,9 @@ if (!telefone.matches("\\d{10,11}")) {
                 + "VALUES (?, ?)";
 
         try {
+            
+            // Executa as validações antes de salvar
+            validarCarro(carro);
 
             // Inicia uma transação no banco
             conn.setAutoCommit(false);
@@ -157,14 +169,9 @@ if (!telefone.matches("\\d{10,11}")) {
 
             // Confirma a transação
             conn.commit();
-
-        } catch (IllegalArgumentException e) {
-
-            // Captura erros de validação dos dados
-            System.out.println(
-                    "Erro de validação: "
-                    + e.getMessage());
-
+            
+            return true;
+            
         } catch (SQLException e) {
 
             // Captura erros relacionados ao banco de dados
@@ -178,14 +185,11 @@ if (!telefone.matches("\\d{10,11}")) {
 
             } catch (SQLException ex) {
 
-                System.out.println(
-                        "Erro ao desfazer transação: "
-                        + ex.getMessage());
+                System.out.println("Erro ao desfazer transação: " + ex.getMessage());
             }
 
-            System.out.println(
-                    "Erro ao salvar carro: "
-                    + e.getMessage());
+            System.out.println("Erro ao salvar carro: " + e.getMessage());
+            return false;
 
         } finally {
 
@@ -198,8 +202,7 @@ if (!telefone.matches("\\d{10,11}")) {
 
             } catch (SQLException e) {
 
-                System.out.println(
-                        "Erro ao restaurar conexão.");
+                System.out.println("Erro ao restaurar conexão.");
             }
         }
     }

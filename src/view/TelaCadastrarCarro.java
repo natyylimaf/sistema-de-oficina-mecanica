@@ -241,6 +241,28 @@ public class TelaCadastrarCarro extends JFrame {
         
         
         try {
+            // Verifica se todos os campos obrigatórios foram preenchidos
+            if (campoNomeMotorista.getText().trim().isEmpty() ||
+                campoCPF.getText().trim().isEmpty() ||
+                campoTelefone.getText().trim().isEmpty() ||
+                campoModelo.getText().trim().isEmpty() ||
+                campoPlaca.getText().trim().isEmpty() ||
+                campoCor.getText().trim().isEmpty() ||
+                campoAno.getText().trim().isEmpty() ||
+                campoQuantidadePortas.getText().trim().isEmpty() ||
+                campoMotivoEntrada.getText().trim().isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Todos os campos são obrigatórios!",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                return;
+            }
+            
+            
             // Obtém os dados dos campos de texto
             nomeMotorista = campoNomeMotorista.getText();
             cpf = campoCPF.getText();
@@ -283,25 +305,58 @@ public class TelaCadastrarCarro extends JFrame {
             // Cria o objetoDAO responsável pela comunicação com o banco
             CarroDAO dao = new CarroDAO(util.Conexao.conectar());
             // Salva a moto no banco de dados
-            dao.salvar(novoCarro);
+            boolean salvo = dao.salvar(novoCarro);
 
-            // Exibe mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Carro salvo com sucesso!");
+            if (salvo) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Carro salvo com sucesso!"
+                );
+
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Não foi possível salvar o carro. Verifique a conexão com o banco de dados.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
 
         } catch (Exception e) {
             // Exibe mensagem de erro caso ocorra alguma exceção
             JOptionPane.showMessageDialog(this, "Erro ao salvar. Verifique os dados.\n" + e.getMessage());
-            
-            e.printStackTrace();
         }
     }
     
-    public static void main(String[] args) {
-        new TelaCadastrarCarro();
-    }
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt){
         TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
         tela.setVisible(true);
         dispose();
+    }
+    
+    
+    // Método para limpar os campos após o cadastro do carro
+    private void limparCampos() {
+        campoNomeMotorista.setText("");
+        campoCPF.setText("");
+        campoTelefone.setText("");
+        campoModelo.setText("");
+        campoPlaca.setText("");
+        campoCor.setText("");
+        campoAno.setText("");
+        campoQuantidadePortas.setText("");
+        campoMotivoEntrada.setText("");
+
+        campoDataChegada.setValue(new Date());
+
+        campoStatus.setText("PENDENTE");
+    }
+    
+    
+    
+    
+    public static void main(String[] args) {
+        new TelaCadastrarCarro();
     }
 }

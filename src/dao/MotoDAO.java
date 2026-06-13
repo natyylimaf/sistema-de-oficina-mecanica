@@ -17,8 +17,26 @@ public class MotoDAO {
 
         // Verifica se o objeto moto foi informado
         if (moto == null) {
-            throw new IllegalArgumentException(
-                    "Dados da moto inválidos.");
+            throw new IllegalArgumentException("Dados da moto inválidos.");
+        }
+        
+        // Verifica campos obrigatórios
+        if (moto.getNomeMotorista() == null ||
+            moto.getNomeMotorista().trim().isEmpty() ||
+
+            moto.getModelo() == null ||
+            moto.getModelo().trim().isEmpty() ||
+
+            moto.getPlaca() == null ||
+            moto.getPlaca().trim().isEmpty() ||
+
+            moto.getCor() == null ||
+            moto.getCor().trim().isEmpty() ||
+
+            moto.getMotivo() == null ||
+            moto.getMotivo().trim().isEmpty()) {
+
+            throw new IllegalArgumentException("Todos os campos são obrigatórios.");
         }
 
         // Validação do CPF
@@ -28,8 +46,7 @@ public class MotoDAO {
        if (cpf == null ||
     !cpf.matches("(\\d{11})|(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})")) {
 
-    throw new IllegalArgumentException(
-            "CPF inválido.");
+    throw new IllegalArgumentException("CPF inválido.");
 }
 
         // Validação do telefone
@@ -37,8 +54,7 @@ public class MotoDAO {
 
 if (telefone == null) {
 
-    throw new IllegalArgumentException(
-            "Telefone inválido.");
+    throw new IllegalArgumentException("Telefone inválido.");
 }
 
 // Remove caracteres de formatação
@@ -50,47 +66,33 @@ telefone = telefone.replace("(", "")
 // Verifica se possui apenas números
 if (!telefone.matches("\\d{10,11}")) {
 
-    throw new IllegalArgumentException(
-            "Telefone inválido.");
+    throw new IllegalArgumentException("Telefone inválido.");
 }
         
-
-// Verifica se a placa foi informada
-        
-        
-        String placa = moto.getPlaca();
-
-        if (placa == null
-                || placa.trim().isEmpty()) {
-
-            throw new IllegalArgumentException(
-                    "Placa obrigatória.");
-        }
 
         // Verifica se a data de chegada foi informada
         if (moto.getDataChegada() == null) {
 
-            throw new IllegalArgumentException(
-                    "Data de chegada obrigatória.");
+            throw new IllegalArgumentException("Data de chegada obrigatória.");
         }
 
         // Verifica se a cilindrada é válida
         if (moto.getCilindradas() <= 0) {
 
-            throw new IllegalArgumentException(
-                    "Cilindrada inválida.");
+            throw new IllegalArgumentException("Cilindrada inválida.");
         }
     }
 
     // Método responsável por salvar uma moto no banco de dados
-    public void salvar(Moto moto) {
+    public boolean salvar(Moto moto) {
 
         // Verifica se a conexão foi criada corretamente
         if (conn == null) {
             System.out.println("Erro: conexão com banco é nula.");
-            return;
+            return false;
         }
-        validarMoto(moto);
+        
+        
         // SQL para inserir os dados gerais do veículo
         String sqlVeiculo =
                 "INSERT INTO veiculos " +
@@ -102,6 +104,8 @@ if (!telefone.matches("\\d{10,11}")) {
                 "INSERT INTO motos (id_veiculo, cilindradas) VALUES (?, ?)";
 
         try {
+            // Executa as validações antes de salvar
+            validarMoto(moto);
 
             // Inicia uma transação no banco
             conn.setAutoCommit(false);
@@ -121,10 +125,6 @@ if (!telefone.matches("\\d{10,11}")) {
                 stmtVeiculo.setInt(7, moto.getAno());
 
                 LocalDate data = moto.getDataChegada();
-
-                if (data == null) {
-                    throw new RuntimeException("Data de chegada não pode ser vazia.");
-                }
 
                 stmtVeiculo.setDate(8, java.sql.Date.valueOf(data));
 
@@ -157,17 +157,37 @@ if (!telefone.matches("\\d{10,11}")) {
             // Confirma a transação no banco
             conn.commit();
 
-        } catch (Exception e) {
+            return true;
 
-            // Em caso de erro, desfaz todas as alterações da transação
-            try {
-                conn.rollback();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (SQLException e) {
+
+                try {
+
+                    if (conn != null) {
+                        conn.rollback();
+                    }
+
+                } catch (SQLException ex) {
+
+                    System.out.println("Erro ao desfazer transação: " + ex.getMessage());
+                }
+
+                System.out.println("Erro ao salvar moto: " + e.getMessage());
+
+                return false;
+
+            } finally {
+
+                try {
+
+                    if (conn != null) {
+                        conn.setAutoCommit(true);
+                    }
+
+                } catch (SQLException e) {
+
+                    System.out.println("Erro ao restaurar conexão.");
+                }
             }
-
-            System.out.println("Erro ao salvar moto: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+    } 
 }

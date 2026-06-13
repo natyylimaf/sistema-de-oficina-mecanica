@@ -40,8 +40,6 @@ public class TelaCadastrarMoto extends JFrame {
 
     private JTextArea campoMotivoEntrada;
 
-    private JComboBox<String> comboStatus;
-
     private JButton bSalvar;
     private JButton bCancelar;
 
@@ -242,6 +240,28 @@ public class TelaCadastrarMoto extends JFrame {
         LocalDate data;
         
         try {
+            // Verifica se todos os campos obrigatórios foram preenchidos
+            if (campoNomeMotorista.getText().trim().isEmpty() ||
+                campoCPF.getText().trim().isEmpty() ||
+                campoTelefone.getText().trim().isEmpty() ||
+                campoModeloVeiculo.getText().trim().isEmpty() ||
+                campoPlaca.getText().trim().isEmpty() ||
+                campoCor.getText().trim().isEmpty() ||
+                campoAnoVeiculo.getText().trim().isEmpty() ||
+                campoCilindradas.getText().trim().isEmpty() ||
+                campoMotivoEntrada.getText().trim().isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Todos os campos são obrigatórios!",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                return;
+            }
+            
+            
             // Obtém os dados dos campos de texto
             nomeMotorista = campoNomeMotorista.getText();
             cpf = campoCPF.getText();
@@ -284,25 +304,59 @@ public class TelaCadastrarMoto extends JFrame {
             // Cria o objetoDAO responsável pela comunicação com o banco
             MotoDAO dao = new MotoDAO(util.Conexao.conectar());
             // Salva a moto no banco de dados
-            dao.salvar(novaMoto);
+            boolean salvo = dao.salvar(novaMoto);
+            
+            if (salvo) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Moto salva com sucesso!"
+                );
 
-            // Exibe mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Moto salva com sucesso!");
+                limparCampos();
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Não foi possível salvar a moto. Verifique a conexão com o banco de dados.",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
 
         } catch (Exception e) {
             // Exibe mensagem de erro caso ocorra alguma exceção
             JOptionPane.showMessageDialog(this, "Erro ao salvar moto. Verifique os dados.\n" + e.getMessage());
-            
-            e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        new TelaCadastrarMoto();
-    }
+    
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt){
         TelaEscolherTipoVeiculo tela = new TelaEscolherTipoVeiculo();
         tela.setVisible(true);
         dispose();
+    }
+    
+    
+    
+    // Método para limpar os campos após o cadastro da moto
+    private void limparCampos() {
+        campoNomeMotorista.setText("");
+        campoCPF.setText("");
+        campoTelefone.setText("");
+        campoModeloVeiculo.setText("");
+        campoPlaca.setText("");
+        campoCor.setText("");
+        campoAnoVeiculo.setText("");
+        campoCilindradas.setText("");
+        campoMotivoEntrada.setText("");
+
+        campoDataChegada.setValue(new Date());
+
+        campoStatus.setText("PENDENTE");
+    }    
+    
+    public static void main(String[] args) {
+        new TelaCadastrarMoto();
     }
 }
